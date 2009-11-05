@@ -20,9 +20,6 @@ public:
     xsComplex<T> operator*(const xsComplex<T> right);
     xsComplex<T> operator*=(const xsComplex<T> right);
 
-    // Power
-    xsComplex<T> operator^(const int power);
-
     // Complex Conjugate
     xsComplex<T> conjugate();
 
