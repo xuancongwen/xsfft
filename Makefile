@@ -1,13 +1,13 @@
 all: demo fft ift
 
-demo: main.c
-	g++ main.c -o test
+demo: main.cpp complex.cpp
+	g++ main.cpp complex.cpp -o test
 
-fft: fftmain.c
-	g++ fftmain.c -o xsfft
+fft: fftmain.cpp complex.cpp
+	g++ fftmain.cpp complex.cpp -o xsfft
 
-ift: iftmain.c
-	g++ iftmain.c -o xsift
+ift: iftmain.cpp complex.cpp
+	g++ iftmain.cpp complex.cpp -o xsift
 
 clean: cdemo cfft cift
 
