@@ -1,1 +1,1 @@
-short *xsShortFFTIterative(short *elements, long numberOfElements);
+void xsShortFFTRecursive(short *inElements, long inNumberOfElements, short *outFrequencyComponents);
