@@ -39,7 +39,7 @@ bool xsShortFFTRecursive(short *inElements, long inNumberOfElements, short *outF
         *(outFrequencyComponents + frequencyIndex) = *(evenFrequencyComponents + frequencyIndex) + omega * (*(oddFrequencyComponents + frequencyIndex));
         *(outFrequencyComponents + frequencyIndex + inNumberOfElements / 2) = *(evenFrequencyComponents + frequencyIndex) - omega * (*(oddFrequencyComponents + frequencyIndex));
     }
-    
+
     return true;
 }
 
