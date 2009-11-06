@@ -3,10 +3,30 @@
     elements.  This function does not care how many elements are in the input file.
 */
 
-#include "stdio.h"
+#include <iostream>
+#include <stdlib.h>
+#include <limits.h>
+
 #include "xsfft.h"
 
 int main(int argc, char *argv[])
 {
-    return 0;
+    long signalLength = 100;
+    short *timeDomain = (short *)calloc(sizeof(short), signalLength);
+    short *freqDomain = (short *)calloc(sizeof(short), signalLength);
+
+    srand(0);
+    for (long signalIndex = 0; signalIndex < signalLength; ++signalIndex) {
+        *(timeDomain + signalIndex) = (rand() % USHRT_MAX) - SHRT_MAX;  // Some (hopefully) gaussian noise
+    }
+
+    bool success = xsFFT<short>(timeDomain, signalLength, freqDomain);
+    for (long freqIndex = 0; freqIndex < signalLength; ++freqIndex) {
+        std::cout << *(freqDomain + freqIndex) << "\t";
+    }
+
+    free(timeDomain);
+    free(freqDomain);
+
+    return success ? 0 : -1;
 }

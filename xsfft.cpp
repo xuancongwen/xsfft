@@ -21,7 +21,7 @@ void _xsCoerceComplex(T *inElements, long inNumberOfElements, xsComplex<T> *outE
 // Public Method Implementations
 
 template <class T>
-bool xsShortFFT(T *inElements, long inNumberOfElements, T *outFrequencyComponents)
+bool xsFFT(T *inElements, long inNumberOfElements, T *outFrequencyComponents)
 {
     if (!inElements) {
         return false;
