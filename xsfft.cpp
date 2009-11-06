@@ -3,7 +3,7 @@
 #include "xsfft.h"
 #include "xscomplex.h"
 
-#define xsPI 3.14159265358979323846
+const double xsPI = 3.14159265358979323846;
 
 // Private functions
 

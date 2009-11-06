@@ -1,13 +1,16 @@
+CPPFLAGS= -O
+CPP= g++
+
 all: test fft ift
 
 test: main.cpp xscomplex.cpp
-	g++ main.cpp xscomplex.cpp xsfft.cpp xsift.cpp -o test
+	$(CPP) $(CPPFLAGS) xscomplex.cpp xsfft.cpp xsift.cpp main.cpp -o test
 
 fft: fftmain.cpp xscomplex.cpp
-	g++ fftmain.cpp xsfft.cpp xscomplex.cpp -o xsfft
+	$(CPP) $(CPPFLAGS) xscomplex.cpp xsfft.cpp fftmain.cpp -o xsfft
 
 ift: iftmain.cpp xscomplex.cpp
-	g++ iftmain.cpp xsift.cpp xscomplex.cpp -o xsift
+	$(CPP) $(CPPFLAGS) xscomplex.cpp xsift.cpp iftmain.cpp -o xsift
 
 clean: cleantest cleanfft cleanift
 

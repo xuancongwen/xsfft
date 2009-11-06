@@ -1,0 +1,221 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1F2A8A9D10A4C3D500E03417 /* fftmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9710A4C3D500E03417 /* fftmain.cpp */; };
+		1F2A8A9E10A4C3D500E03417 /* iftmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9810A4C3D500E03417 /* iftmain.cpp */; };
+		1F2A8A9F10A4C3D500E03417 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9910A4C3D500E03417 /* main.cpp */; };
+		1F2A8AA010A4C3D500E03417 /* xscomplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9A10A4C3D500E03417 /* xscomplex.cpp */; };
+		1F2A8AA110A4C3D500E03417 /* xsfft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */; };
+		1F2A8AA210A4C3D500E03417 /* xsift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9C10A4C3D500E03417 /* xsift.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76F690486A84900D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1F2A8A9410A4C3D500E03417 /* xscomplex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xscomplex.h; path = ../xscomplex.h; sourceTree = SOURCE_ROOT; };
+		1F2A8A9510A4C3D500E03417 /* xsfft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xsfft.h; path = ../xsfft.h; sourceTree = "<group>"; };
+		1F2A8A9610A4C3D500E03417 /* xsift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xsift.h; path = ../xsift.h; sourceTree = SOURCE_ROOT; };
+		1F2A8A9710A4C3D500E03417 /* fftmain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = fftmain.cpp; path = ../fftmain.cpp; sourceTree = SOURCE_ROOT; };
+		1F2A8A9810A4C3D500E03417 /* iftmain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = iftmain.cpp; path = ../iftmain.cpp; sourceTree = SOURCE_ROOT; };
+		1F2A8A9910A4C3D500E03417 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
+		1F2A8A9A10A4C3D500E03417 /* xscomplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xscomplex.cpp; path = ../xscomplex.cpp; sourceTree = SOURCE_ROOT; };
+		1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xsfft.cpp; path = ../xsfft.cpp; sourceTree = "<group>"; };
+		1F2A8A9C10A4C3D500E03417 /* xsift.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xsift.cpp; path = ../xsift.cpp; sourceTree = SOURCE_ROOT; };
+		8DD76F6C0486A84900D96B5E /* xsfft */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xsfft; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* xsfft */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = xsfft;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1F2A8A9410A4C3D500E03417 /* xscomplex.h */,
+				1F2A8A9510A4C3D500E03417 /* xsfft.h */,
+				1F2A8A9610A4C3D500E03417 /* xsift.h */,
+				1F2A8A9710A4C3D500E03417 /* fftmain.cpp */,
+				1F2A8A9810A4C3D500E03417 /* iftmain.cpp */,
+				1F2A8A9910A4C3D500E03417 /* main.cpp */,
+				1F2A8A9A10A4C3D500E03417 /* xscomplex.cpp */,
+				1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */,
+				1F2A8A9C10A4C3D500E03417 /* xsift.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76F6C0486A84900D96B5E /* xsfft */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76F620486A84900D96B5E /* xsfft */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "xsfft" */;
+			buildPhases = (
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+				8DD76F690486A84900D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = xsfft;
+			productInstallPath = "$(HOME)/bin";
+			productName = xsfft;
+			productReference = 8DD76F6C0486A84900D96B5E /* xsfft */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "xsfft" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* xsfft */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* xsfft */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F2A8A9D10A4C3D500E03417 /* fftmain.cpp in Sources */,
+				1F2A8A9E10A4C3D500E03417 /* iftmain.cpp in Sources */,
+				1F2A8A9F10A4C3D500E03417 /* main.cpp in Sources */,
+				1F2A8AA010A4C3D500E03417 /* xscomplex.cpp in Sources */,
+				1F2A8AA110A4C3D500E03417 /* xsfft.cpp in Sources */,
+				1F2A8AA210A4C3D500E03417 /* xsift.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB923208733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_GLIBCXX_DEBUG=1",
+					"_GLIBCXX_DEBUG_PEDANTIC=1",
+				);
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = xsfft;
+			};
+			name = Debug;
+		};
+		1DEB923308733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = xsfft;
+			};
+			name = Release;
+		};
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "xsfft" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923208733DC60010E9CD /* Debug */,
+				1DEB923308733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "xsfft" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
