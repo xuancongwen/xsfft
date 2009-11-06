@@ -37,14 +37,14 @@ bool xsFFT(T *inElements, long inNumberOfElements, T *outFrequencyComponents)
     _xsCoerceComplex<T>(inElements, numberOfElementsRad2, inElementsComplex);
     _xsFFTRecursive<T>(inElementsComplex, numberOfElementsRad2, outFrequencyComponents);
     
-    free (inElementsComplex);
+    free(inElementsComplex);
 
     return true;
 }
 
 // Private Method Implementation
 
-long _xsNextPowerOfTwo(long value)
+long xsNextPowerOfTwo(long value)
 {
     long nextPowerOfTwo = 1;
     while (nextPowerOfTwo < value) {
@@ -57,7 +57,7 @@ long _xsNextPowerOfTwo(long value)
 template <class T>
 long _xsCoerceRad2Input(T *elements, long numberOfElements)
 {
-    long idealNumberOfElements = _xsNextPowerOfTwo(numberOfElements);
+    long idealNumberOfElements = xsNextPowerOfTwo(numberOfElements);
     elements = (T *)realloc(elements, idealNumberOfElements);
 
     for (long newIndex = numberOfElements; newIndex < idealNumberOfElements; ++newIndex) {
