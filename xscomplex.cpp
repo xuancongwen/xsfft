@@ -1,33 +1,50 @@
-#include "complex.h"
+#include <math.h>
+
+#include "xscomplex.h"
+
+// Initialization
+ 
+template <class T>
+xsComplex<T>::xsComplex()
+{
+    this.real = (T)0;
+    this.imaginary = (T)0;
+}
 
 template <class T>
 xsComplex<T>::xsComplex(const T real_part, const T imaginary_part)
-    :real(real_part), imaginary(imaginary_part)
 {
+    this.real = real_part;
+    this.imaginary_part = real_part;
 }
 
 template <class T>
 xsComplex<T>::xsComplex(const xsComplex<T> &toCopy)
-    :real(toCopy.real), imaginary(toCopy.imaginary)
 {
+    this.real = toCopy.real;
+    this.imaginary = toCopy.imaginary;
 }
 
+// Euler's Identity
+
 template <class T>
-xsComplex<T>::~xsComplex()
+void xsComplex<T>::initWithEulerIdentity(const T &theta)
 {
+    this.real = cos(theta);
+    this.imaginary = sin(theta);
 }
 
 // Addition
 
 template <class T>
-xsComplex<T> xsComplex<T>::operator+(const xsComplex<T> right)
+xsComplex<T> xsComplex<T>::operator+(const xsComplex<T> &right)
 {
     xsComplex<T> sum(this.real + right.real, this.imaginary + right.imaginary);
     return sum;
 }
 
 template <class T>
-xsComplex<T> xsComplex<T>::operator+=(const xsComplex<T> right)
+xsComplex<T> xsComplex<T>::operator+=(const xsComplex<T> &right)
 {
     xsComplex<T> sum(this + right);
     return sum;
@@ -36,14 +53,14 @@ xsComplex<T> xsComplex<T>::operator+=(const xsComplex<T> right)
 // Subtraction
 
 template <class T>
-xsComplex<T> xsComplex<T>::operator-(const xsComplex<T> right)
+xsComplex<T> xsComplex<T>::operator-(const xsComplex<T> &right)
 {
     xsComplex<T> difference(this.real - right.real, this.imaginary - right.imagniary);
     return difference;
 }
 
 template <class T>
-xsComplex<T> xsComplex<T>::operator-=(const xsComplex<T> right)
+xsComplex<T> xsComplex<T>::operator-=(const xsComplex<T> &right)
 {
     xsComplex<T> difference(this - right);
     return difference;
@@ -52,14 +69,14 @@ xsComplex<T> xsComplex<T>::operator-=(const xsComplex<T> right)
 // Multiplication
 
 template <class T>
-xsComplex<T> xsComplex<T>::operator*(const xsComplex<T> right)
+xsComplex<T> xsComplex<T>::operator*(const xsComplex<T> &right)
 {
     xsComplex<T> product(this.real * right.real - this.imaginary * right.imaginary, this.real * right.imaginary + this.imaginary * right.real);
     return product;
 }
 
 template <class T>
-xsComplex<T> xsComplex<T>::operator*=(const xsComplex<T> right)
+xsComplex<T> xsComplex<T>::operator*=(const xsComplex<T> &right)
 {
     xsComplex<T> product(this * right);
     return product;

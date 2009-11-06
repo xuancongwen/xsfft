@@ -1,1 +1,1 @@
-void xsShortFFTRecursive(short *inElements, long inNumberOfElements, short *outFrequencyComponents);
+bool xsShortFFT(short *inElements, long inNumberOfElements, short *outFrequencyComponents);
