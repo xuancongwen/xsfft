@@ -32,30 +32,6 @@ bool xsShortFFT(short *inElements, long inNumberOfElements, short *outFrequencyC
     _xsCoerceRad2Input<short>(inElements, inNumberOfElements);
     //_xsCoerceComplex();
     //_xsFFTRecursive();
-    
-    // Convert incoming data into complex number
-
-    short *evenElements = (short *)calloc(inNumberOfElements / 2, sizeof(short));
-    short *oddElements = (short *)calloc(inNumberOfElements / 2, sizeof(short));
-    for (long index = 0; index < inNumberOfElements / 2; ++index) {
-        *(evenElements + index) = *(inElements + (index * 2));
-        *(oddElements + index) = *(inElements + (index * 2) + 1);
-    }
-
-//    short *evenFrequencyComponents = xsShortFFT(evenElements, inNumberOfElements / 2);
-//    short *oddFrequencyComponents = xsShortFFT(oddElements, inNumberOfElements / 2);
-    free(evenElements);
-    free(oddElements);
-
-    xsComplex<double> twiddleConstant;
-    twiddleConstant.initWithEulerIdentity(2.0 * xsPI / (double)inNumberOfElements);
-    
-    xsComplex<double> twiddleFactor(1.0, 0.0);
-    for (long frequencyIndex = 0; frequencyIndex < inNumberOfElements / 2; ++frequencyIndex) {
-        //*(outFrequencyComponents + frequencyIndex) = *(evenFrequencyComponents + frequencyIndex) + omega * (*(oddFrequencyComponents + frequencyIndex));
-        //*(outFrequencyComponents + frequencyIndex + inNumberOfElements / 2) = *(evenFrequencyComponents + frequencyIndex) - omega * (*(oddFrequencyComponents + frequencyIndex));
-        twiddleFactor *= twiddleConstant;
-    }
 
     return true;
 }
@@ -79,7 +55,7 @@ long _xsCoerceRad2Input(T *elements, long numberOfElements)
     elements = (short *)realloc(elements, idealNumberOfElements);
 
     for (long newIndex = numberOfElements; newIndex < idealNumberOfElements; ++newIndex) {
-        *(elements + newIndex) = 0;
+        *(elements + newIndex) = (T)0;
     }
 
     return idealNumberOfElements;
@@ -88,7 +64,10 @@ long _xsCoerceRad2Input(T *elements, long numberOfElements)
 template <class T>
 void _xsCoerceComplex(T *inElements, long inNumberOfElements, xsComplex<T> *outElements)
 {
-    
+    // outElements is already allocated, and MUST be the same size as inNumberOfElements
+    for (long index = 0; index < inNumberOfElements; ++index) {
+        *(outElements + index) = new xsComplex<T>(*(inElements + index), (T)0);
+    }
 }
 
 template <class T>
@@ -97,5 +76,31 @@ void _xsFFTRecursive(xsComplex<T> *inElements, long inNumberOfElements, xsComple
     if (inNumberOfElements == 1) {
         outFrequencyComponents = inElements;
         return;
+    }
+    
+    xsComplex<T> *evenElements = (xsComplex<T> *)calloc(inNumberOfElements / 2, sizeof(xsComplex<T>));
+    xsComplex<T> *oddElements = (xsComplex<T> *)calloc(inNumberOfElements / 2, sizeof(xsComplex<T>));
+    for (long index = 0; index < inNumberOfElements / 2; ++index) {
+        *(evenElements + index) = *(inElements + (index * 2));
+        *(oddElements + index) = *(inElements + (index * 2) + 1);
+    }
+
+    xsComplex<T> *evenFrequencyComponents;
+    _xsFFTRecursive(evenElements, inNumberOfElements / 2, evenFrequencyComponents);
+
+    xsComplex<T> *oddFrequencyComponents;
+    _xsFFTRecursive(oddElements, inNumberOfElements / 2, oddFrequencyComponents);
+
+    free(evenElements);
+    free(oddElements);
+
+    xsComplex<double> twiddleConstant;
+    twiddleConstant.initWithEulerIdentity(2.0 * xsPI / (double)inNumberOfElements);
+    
+    xsComplex<double> twiddleFactor(1.0, 0.0);
+    for (long frequencyIndex = 0; frequencyIndex < inNumberOfElements / 2; ++frequencyIndex) {
+        *(outFrequencyComponents + frequencyIndex) = *(evenFrequencyComponents + frequencyIndex) + twiddleFactor * (*(oddFrequencyComponents + frequencyIndex));
+        *(outFrequencyComponents + frequencyIndex + inNumberOfElements / 2) = *(evenFrequencyComponents + frequencyIndex) - twiddleFactor * (*(oddFrequencyComponents + frequencyIndex));
+        twiddleFactor *= twiddleConstant;
     }
 }

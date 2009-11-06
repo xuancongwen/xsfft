@@ -1,13 +1,13 @@
-all: demo fft ift
+all: test fft ift
 
-demo: main.cpp xscomplex.cpp
+test: main.cpp xscomplex.cpp
 	g++ main.cpp xscomplex.cpp xsfft.cpp xsift.cpp -o test
 
 fft: fftmain.cpp xscomplex.cpp
-	g++ fftmain.cpp xscomplex.cpp xsfft.cpp -o xsfft
+	g++ fftmain.cpp xsfft.cpp xscomplex.cpp -o xsfft
 
 ift: iftmain.cpp xscomplex.cpp
-	g++ iftmain.cpp xscomplex.cpp xsift.cpp -o xsift
+	g++ iftmain.cpp xsift.cpp xscomplex.cpp -o xsift
 
 clean: cleantest cleanfft cleanift
 
