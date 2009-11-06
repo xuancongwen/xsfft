@@ -15,7 +15,7 @@ template <class T>
 xsComplex<T>::xsComplex(T real_part, T imaginary_part)
 {
     this->real = real_part;
-    this->imaginary_part = real_part;
+    this->imaginary = real_part;
 }
 
 template <class T>
