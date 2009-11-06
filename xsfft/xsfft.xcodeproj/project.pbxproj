@@ -8,11 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1F2A8A9D10A4C3D500E03417 /* fftmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9710A4C3D500E03417 /* fftmain.cpp */; };
-		1F2A8A9E10A4C3D500E03417 /* iftmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9810A4C3D500E03417 /* iftmain.cpp */; };
-		1F2A8A9F10A4C3D500E03417 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9910A4C3D500E03417 /* main.cpp */; };
 		1F2A8AA010A4C3D500E03417 /* xscomplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9A10A4C3D500E03417 /* xscomplex.cpp */; };
 		1F2A8AA110A4C3D500E03417 /* xsfft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */; };
-		1F2A8AA210A4C3D500E03417 /* xsift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9C10A4C3D500E03417 /* xsift.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,13 +26,13 @@
 
 /* Begin PBXFileReference section */
 		1F2A8A9410A4C3D500E03417 /* xscomplex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xscomplex.h; path = ../xscomplex.h; sourceTree = SOURCE_ROOT; };
-		1F2A8A9510A4C3D500E03417 /* xsfft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xsfft.h; path = ../xsfft.h; sourceTree = "<group>"; };
+		1F2A8A9510A4C3D500E03417 /* xsfft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xsfft.h; path = /Users/xuwen/Workspace/SamWenInc/xsfft/xsfft.h; sourceTree = "<absolute>"; };
 		1F2A8A9610A4C3D500E03417 /* xsift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xsift.h; path = ../xsift.h; sourceTree = SOURCE_ROOT; };
 		1F2A8A9710A4C3D500E03417 /* fftmain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = fftmain.cpp; path = ../fftmain.cpp; sourceTree = SOURCE_ROOT; };
 		1F2A8A9810A4C3D500E03417 /* iftmain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = iftmain.cpp; path = ../iftmain.cpp; sourceTree = SOURCE_ROOT; };
 		1F2A8A9910A4C3D500E03417 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
 		1F2A8A9A10A4C3D500E03417 /* xscomplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xscomplex.cpp; path = ../xscomplex.cpp; sourceTree = SOURCE_ROOT; };
-		1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xsfft.cpp; path = ../xsfft.cpp; sourceTree = "<group>"; };
+		1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xsfft.cpp; path = /Users/xuwen/Workspace/SamWenInc/xsfft/xsfft.cpp; sourceTree = "<absolute>"; };
 		1F2A8A9C10A4C3D500E03417 /* xsift.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xsift.cpp; path = ../xsift.cpp; sourceTree = SOURCE_ROOT; };
 		8DD76F6C0486A84900D96B5E /* xsfft */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xsfft; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -63,15 +60,11 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1F2A8AAA10A4C4D700E03417 /* Demo */,
+				1F2A8AA910A4C4D200E03417 /* IFT */,
+				1F2A8AA810A4C4CA00E03417 /* FFT */,
 				1F2A8A9410A4C3D500E03417 /* xscomplex.h */,
-				1F2A8A9510A4C3D500E03417 /* xsfft.h */,
-				1F2A8A9610A4C3D500E03417 /* xsift.h */,
-				1F2A8A9710A4C3D500E03417 /* fftmain.cpp */,
-				1F2A8A9810A4C3D500E03417 /* iftmain.cpp */,
-				1F2A8A9910A4C3D500E03417 /* main.cpp */,
 				1F2A8A9A10A4C3D500E03417 /* xscomplex.cpp */,
-				1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */,
-				1F2A8A9C10A4C3D500E03417 /* xsift.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -82,6 +75,34 @@
 				8DD76F6C0486A84900D96B5E /* xsfft */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1F2A8AA810A4C4CA00E03417 /* FFT */ = {
+			isa = PBXGroup;
+			children = (
+				1F2A8A9710A4C3D500E03417 /* fftmain.cpp */,
+				1F2A8A9510A4C3D500E03417 /* xsfft.h */,
+				1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */,
+			);
+			name = FFT;
+			sourceTree = "<group>";
+		};
+		1F2A8AA910A4C4D200E03417 /* IFT */ = {
+			isa = PBXGroup;
+			children = (
+				1F2A8A9810A4C3D500E03417 /* iftmain.cpp */,
+				1F2A8A9610A4C3D500E03417 /* xsift.h */,
+				1F2A8A9C10A4C3D500E03417 /* xsift.cpp */,
+			);
+			name = IFT;
+			sourceTree = "<group>";
+		};
+		1F2A8AAA10A4C4D700E03417 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				1F2A8A9910A4C3D500E03417 /* main.cpp */,
+			);
+			name = Demo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,11 +149,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F2A8A9D10A4C3D500E03417 /* fftmain.cpp in Sources */,
-				1F2A8A9E10A4C3D500E03417 /* iftmain.cpp in Sources */,
-				1F2A8A9F10A4C3D500E03417 /* main.cpp in Sources */,
 				1F2A8AA010A4C3D500E03417 /* xscomplex.cpp in Sources */,
 				1F2A8AA110A4C3D500E03417 /* xsfft.cpp in Sources */,
-				1F2A8AA210A4C3D500E03417 /* xsift.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
