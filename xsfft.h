@@ -1,6 +1,7 @@
 #ifndef XS_FFT
 #define XS_FFT
 
-bool xsShortFFT(short *inElements, long inNumberOfElements, short *outFrequencyComponents);
+template <class T>
+bool xsShortFFT(T *inElements, long inNumberOfElements, T *outFrequencyComponents);
 
 #endif

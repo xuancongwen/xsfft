@@ -13,6 +13,12 @@ public:
     // Euler's Identity
     void initWithEulerIdentity(T theta);
 
+    // Assignment
+    void operator=(xsComplex<T> &right);
+
+    // Equality
+    bool operator==(xsComplex<T> &right);
+
     // Addition
     xsComplex<T> operator+(xsComplex<T> &right);
     xsComplex<T> operator+=(xsComplex<T> &right);

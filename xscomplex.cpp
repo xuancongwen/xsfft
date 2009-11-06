@@ -34,6 +34,23 @@ void xsComplex<T>::initWithEulerIdentity(T theta)
     this.imaginary = sin(theta);
 }
 
+// Assignment
+
+template <class T>
+void xsComplex<T>::operator=(xsComplex<T> &right)
+{
+    this.real = right.real;
+    this.imaginary = right.imaginary;
+}
+
+// Equality
+
+template <class T>
+bool xsComplex<T>::operator==(xsComplex<T> &right)
+{
+    return this.real == right.real && this.imaginary = right.imaginary;
+}
+
 // Addition
 
 template <class T>
