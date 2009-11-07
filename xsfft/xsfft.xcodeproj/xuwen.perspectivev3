@@ -276,8 +276,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>9</integer>
-									<integer>8</integer>
+									<integer>13</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -318,7 +317,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1F2A8A8410A4C38700E03417</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>fftmain.cpp</string>
+								<string>xscomplex.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -326,22 +325,22 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1F2A8A8510A4C38700E03417</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>fftmain.cpp</string>
+										<string>xscomplex.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1F2A8C7D10A4FED900E03417</string>
+										<string>1F2A8C8310A4FF5100E03417</string>
 										<key>history</key>
 										<array>
 											<string>1F2A8ADE10A4C59900E03417</string>
 											<string>1F2A8ADF10A4C59900E03417</string>
 											<string>1F2A8B2610A4D98D00E03417</string>
-											<string>1F2A8B9910A4EA2800E03417</string>
 											<string>1F2A8BD010A4F71900E03417</string>
 											<string>1F2A8C6D10A4FE7400E03417</string>
+											<string>1F2A8C8010A4FF5100E03417</string>
+											<string>1F2A8C8110A4FF5100E03417</string>
+											<string>1F2A8C8210A4FF5100E03417</string>
 											<string>1F2A8C6E10A4FE7400E03417</string>
-											<string>1F2A8C7B10A4FED900E03417</string>
-											<string>1F2A8C7C10A4FED900E03417</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>

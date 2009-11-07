@@ -159,7 +159,7 @@ xsComplex &xsComplex::operator*=(const xsComplex &right)
 
 xsComplex xsComplex::conjugate()
 {
-    xsComplex complexConjugate(this->real, this->imaginary);
+    xsComplex complexConjugate(this->real, -(this->imaginary));
     return complexConjugate;
 }
 
