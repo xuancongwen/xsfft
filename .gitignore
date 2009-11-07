@@ -4,4 +4,6 @@ build
 test
 xsfft
 xsift
+*.pbxuser
+*.perspectivev3
 
