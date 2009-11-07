@@ -298,7 +298,9 @@ void _xsFFTRecursive(xsComplex *inElements, long inNumberOfElements, xsComplex *
     xsComplex twiddleConstant;
     twiddleConstant.initWithEulerIdentity(2.0 * xsPI / (double)inNumberOfElements);
 
-    xsComplex twiddleFactor(1.0, 0.0);
+    xsComplex twiddleFactor;
+    twiddleFactor.real = 1.0;
+    twiddleFactor.imaginary = 0.0;
     for (long frequencyIndex = 0; frequencyIndex < inNumberOfElements / 2; ++frequencyIndex) {
         xsComplex *lowerHalf = (outFrequencyComponents + frequencyIndex);
         xsComplex *bottomHalf = (outFrequencyComponents + frequencyIndex + inNumberOfElements / 2);
