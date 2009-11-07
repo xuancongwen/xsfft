@@ -6,4 +6,8 @@ xsfft
 xsift
 *.pbxuser
 *.perspectivev3
+*.mode1v3
+*.mode2v3
+*.tm_build_errors
+.gitattributes
 
