@@ -39,7 +39,7 @@ bool xsFFT(double *inElements, long inNumberOfElements, double *outFrequencyComp
     xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
     }
     
@@ -63,7 +63,7 @@ bool xsFFT(float *inElements, long inNumberOfElements, float *outFrequencyCompon
     xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
     }
     
@@ -87,7 +87,7 @@ bool xsFFT(long *inElements, long inNumberOfElements, long *outFrequencyComponen
     xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
     }
     
@@ -111,7 +111,7 @@ bool xsFFT(int *inElements, long inNumberOfElements, int *outFrequencyComponents
     xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
     }
     
@@ -135,7 +135,7 @@ bool xsFFT(short *inElements, long inNumberOfElements, short *outFrequencyCompon
     xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
     }
     
@@ -159,7 +159,7 @@ bool xsFFT(char *inElements, long inNumberOfElements, char *outFrequencyComponen
     xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
     }
     
@@ -188,7 +188,7 @@ xsDoubleArray _xsFormatData(double *elements, long elementsSize)
     formattedData.length = xsNextPowerOfTwo(elementsSize);
     formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         xsComplex *curElement = formattedData.data + index;
         curElement->real = *(elements + index);
         curElement->imaginary = 0.0;
@@ -203,7 +203,7 @@ xsDoubleArray _xsFormatData(float *elements, long elementsSize)
     formattedData.length = xsNextPowerOfTwo(elementsSize);
     formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         xsComplex *curElement = formattedData.data + index;
         curElement->real = *(elements + index);
         curElement->imaginary = 0.0;
@@ -218,7 +218,7 @@ xsDoubleArray _xsFormatData(long *elements, long elementsSize)
     formattedData.length = xsNextPowerOfTwo(elementsSize);
     formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         xsComplex *curElement = formattedData.data + index;
         curElement->real = *(elements + index);
         curElement->imaginary = 0.0;
@@ -233,7 +233,7 @@ xsDoubleArray _xsFormatData(int *elements, long elementsSize)
     formattedData.length = xsNextPowerOfTwo(elementsSize);
     formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         xsComplex *curElement = formattedData.data + index;
         curElement->real = *(elements + index);
         curElement->imaginary = 0.0;
@@ -248,7 +248,7 @@ xsDoubleArray _xsFormatData(short *elements, long elementsSize)
     formattedData.length = xsNextPowerOfTwo(elementsSize);
     formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         xsComplex *curElement = formattedData.data + index;
         curElement->real = *(elements + index);
         curElement->imaginary = 0.0;
@@ -263,7 +263,7 @@ xsDoubleArray _xsFormatData(char *elements, long elementsSize)
     formattedData.length = xsNextPowerOfTwo(elementsSize);
     formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
     
-    for (long index = 0; index < formattedData.length; ++index) {
+    for(long index = 0; index < formattedData.length; ++index) {
         xsComplex *curElement = formattedData.data + index;
         curElement->real = *(elements + index);
         curElement->imaginary = 0.0;
@@ -275,13 +275,13 @@ xsDoubleArray _xsFormatData(char *elements, long elementsSize)
 void _xsFFTRecursive(xsComplex *inElements, long inNumberOfElements, xsComplex *outFrequencyComponents)
 {
     if (inNumberOfElements == 1) {
-        outFrequencyComponents = inElements;
+        *outFrequencyComponents = *inElements;
         return;
     }
 
     xsComplex *evenElements = (xsComplex *)calloc(inNumberOfElements / 2, sizeof(xsComplex));
     xsComplex *oddElements = (xsComplex *)calloc(inNumberOfElements / 2, sizeof(xsComplex));
-    for (long index = 0; index < inNumberOfElements / 2; ++index) {
+    for(long index = 0; index < inNumberOfElements / 2; ++index) {
         *(evenElements + index) = *(inElements + (index * 2));
         *(oddElements + index) = *(inElements + (index * 2) + 1);
     }
@@ -301,7 +301,7 @@ void _xsFFTRecursive(xsComplex *inElements, long inNumberOfElements, xsComplex *
     xsComplex twiddleFactor;
     twiddleFactor.real = 1.0;
     twiddleFactor.imaginary = 0.0;
-    for (long frequencyIndex = 0; frequencyIndex < inNumberOfElements / 2; ++frequencyIndex) {
+    for(long frequencyIndex = 0; frequencyIndex < inNumberOfElements / 2; ++frequencyIndex) {
         xsComplex *lowerHalf = (outFrequencyComponents + frequencyIndex);
         xsComplex *bottomHalf = (outFrequencyComponents + frequencyIndex + inNumberOfElements / 2);
         
