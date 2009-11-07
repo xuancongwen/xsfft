@@ -1,42 +1,55 @@
 #ifndef XS_COMPLEX
 #define XS_COMPLEX
 
-template <class T>
 class xsComplex
 {
 public:
     // Initialization
     xsComplex();
-    xsComplex(T real_part, T imaginary_part);
-    xsComplex(xsComplex<T> &toCopy);
+    xsComplex(const double real_part, const double imaginary_part);
+    xsComplex(const float real_part, const float imaginary_part);
+    xsComplex(const long real_part, const long imaginary_part);
+    xsComplex(const int real_part, const int imaginary_part);
+    xsComplex(const short real_part, const short imaginary_part);
+    xsComplex(const char real_part, const char imaginary_part);
+    xsComplex(const xsComplex &toCopy);
 
     // Euler's Identity
-    void initWithEulerIdentity(T theta);
+    void initWithEulerIdentity(const double theta);
+    void initWithEulerIdentity(const float theta);
+    void initWithEulerIdentity(const long theta);
+    void initWithEulerIdentity(const int theta);
+    void initWithEulerIdentity(const short theta);
+    void initWithEulerIdentity(const char theta);
 
     // Assignment
-    void operator=(xsComplex<T> &right);
+    xsComplex &operator=(const xsComplex &right);
 
     // Equality
-    bool operator==(xsComplex<T> &right);
+    bool operator==(const xsComplex &right) const;
+    bool operator!=(const xsComplex &right) const;
 
     // Addition
-    xsComplex<T> operator+(xsComplex<T> &right);
-    xsComplex<T> operator+=(xsComplex<T> &right);
+    const xsComplex operator+(const xsComplex &right) const;
+    xsComplex &operator+=(const xsComplex &right);
 
     // Subtraction
-    xsComplex<T> operator-(xsComplex<T> &right);
-    xsComplex<T> operator-=(xsComplex<T> &right);
+    const xsComplex operator-(const xsComplex &right) const;
+    xsComplex &operator-=(const xsComplex &right);
 
     // Multiplication
-    xsComplex<T> operator*(xsComplex<T> &right);
-    xsComplex<T> operator*=(xsComplex<T> &right);
+    const xsComplex operator*(const xsComplex &right) const;
+    xsComplex &operator*=(const xsComplex &right);
 
     // Complex Conjugate
-    xsComplex<T> conjugate();
+    xsComplex conjugate();
+    
+    // Magnitude
+    double magnitude();
 
-private:
-    T real;
-    T imaginary;
+    // Public data
+    double real;
+    double imaginary;
 };
 
 #endif

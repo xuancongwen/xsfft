@@ -4,22 +4,37 @@
 
 // Initialization
  
-template <class T>
-xsComplex<T>::xsComplex()
+xsComplex::xsComplex()
 {
-    this->real = (T)0;
-    this->imaginary = (T)0;
+    this->real = 0.0;
+    this->imaginary = 0.0;
 }
 
-template <class T>
-xsComplex<T>::xsComplex(T real_part, T imaginary_part)
+xsComplex::xsComplex(const long real_part, const long imaginary_part)
 {
-    this->real = real_part;
-    this->imaginary = real_part;
+    this->real = (double)real_part;
+    this->imaginary = (double)real_part;
 }
 
-template <class T>
-xsComplex<T>::xsComplex(xsComplex<T> &toCopy)
+xsComplex::xsComplex(const int real_part, const int imaginary_part)
+{
+    this->real = (double)real_part;
+    this->imaginary = (double)real_part;
+}
+
+xsComplex::xsComplex(const short real_part, const short imaginary_part)
+{
+    this->real = (double)real_part;
+    this->imaginary = (double)real_part;
+}
+
+xsComplex::xsComplex(const char real_part, const char imaginary_part)
+{
+    this->real = (double)real_part;
+    this->imaginary = (double)real_part;
+}
+
+xsComplex::xsComplex(const xsComplex &toCopy)
 {
     this->real = toCopy.real;
     this->imaginary = toCopy.imaginary;
@@ -27,83 +42,130 @@ xsComplex<T>::xsComplex(xsComplex<T> &toCopy)
 
 // Euler's Identity
 
-template <class T>
-void xsComplex<T>::initWithEulerIdentity(T theta)
+void xsComplex::initWithEulerIdentity(const double theta)
 {
     this->real = cos(theta);
     this->imaginary = sin(theta);
 }
 
+void xsComplex::initWithEulerIdentity(const float theta)
+{
+    this->real = cos((double)theta);
+    this->imaginary = sin((double)theta);
+}
+
+void xsComplex::initWithEulerIdentity(const long theta)
+{
+    this->real = cos((double)theta);
+    this->imaginary = sin((double)theta);
+}
+
+void xsComplex::initWithEulerIdentity(const int theta)
+{
+    this->real = cos((double)theta);
+    this->imaginary = sin((double)theta);
+}
+
+void xsComplex::initWithEulerIdentity(const short theta)
+{
+    this->real = cos((double)theta);
+    this->imaginary = sin((double)theta);
+}
+
+void xsComplex::initWithEulerIdentity(const char theta)
+{
+    this->real = cos((double)theta);
+    this->imaginary = sin((double)theta);
+}
+
 // Assignment
 
-template <class T>
-void xsComplex<T>::operator=(xsComplex<T> &right)
+xsComplex &xsComplex::operator=(const xsComplex &right)
 {
+    if (this == &right) {
+        return *this;
+    }
+    
     this->real = right.real;
     this->imaginary = right.imaginary;
+    
+    return *this;
 }
 
 // Equality
 
-template <class T>
-bool xsComplex<T>::operator==(xsComplex<T> &right)
+bool xsComplex::operator==(const xsComplex &right) const
 {
-    return this->real == right.real && this->imaginary = right.imaginary;
+    return this->real == right.real && this->imaginary == right.imaginary;
+}
+
+bool xsComplex::operator!=(const xsComplex &right) const
+{
+    return !(*this == right);
 }
 
 // Addition
 
-template <class T>
-xsComplex<T> xsComplex<T>::operator+(xsComplex<T> &right)
+const xsComplex xsComplex::operator+(const xsComplex &right) const
 {
-    xsComplex<T> sum(this->real + right.real, this->imaginary + right.imaginary);
+    xsComplex sum = *this;
+    sum.real += right.real;
+    sum.imaginary += right.imaginary;
     return sum;
 }
 
-template <class T>
-xsComplex<T> xsComplex<T>::operator+=(xsComplex<T> &right)
+xsComplex &xsComplex::operator+=(const xsComplex &right)
 {
-    xsComplex<T> sum(this + right);
-    return sum;
+    this->real += right.real;
+    this->imaginary += right.imaginary;
+    return *this;
 }
 
 // Subtraction
 
-template <class T>
-xsComplex<T> xsComplex<T>::operator-(xsComplex<T> &right)
+const xsComplex xsComplex::operator-(const xsComplex &right) const
 {
-    xsComplex<T> difference(this->real - right.real, this->imaginary - right.imagniary);
+    xsComplex difference = *this;
+    difference.real -= right.real;
+    difference.imaginary -= right.imaginary;
     return difference;
 }
 
-template <class T>
-xsComplex<T> xsComplex<T>::operator-=(xsComplex<T> &right)
+xsComplex &xsComplex::operator-=(const xsComplex &right)
 {
-    xsComplex<T> difference(this - right);
-    return difference;
+    this->real -= right.real;
+    this->imaginary -= right.real;
+    return *this;
 }
 
 // Multiplication
 
-template <class T>
-xsComplex<T> xsComplex<T>::operator*(xsComplex<T> &right)
+const xsComplex xsComplex::operator*(const xsComplex &right) const
 {
-    xsComplex<T> product(this->real * right.real - this->imaginary * right.imaginary, this->real * right.imaginary + this->imaginary * right.real);
+    xsComplex product = *this;
+    product.real = this->real * right.real - this->imaginary * right.imaginary;
+    product.imaginary = this->real * right.imaginary + this->imaginary * right.real;
     return product;
 }
 
-template <class T>
-xsComplex<T> xsComplex<T>::operator*=(xsComplex<T> &right)
+xsComplex &xsComplex::operator*=(const xsComplex &right)
 {
-    xsComplex<T> product(this * right);
-    return product;
+    this->real = this->real * right.real - this->imaginary * right.imaginary;
+    this->imaginary = this->real * right.imaginary + this->imaginary * right.real;
+    return *this;
 }
 
 // Conjugate
 
-template <class T>
-xsComplex<T> xsComplex<T>::conjugate()
+xsComplex xsComplex::conjugate()
 {
-    xsComplex<T> complexConjugate(this->real, this->imaginary);
+    xsComplex complexConjugate(this->real, this->imaginary);
     return complexConjugate;
+}
+
+// Magnitude
+
+double xsComplex::magnitude()
+{
+    return sqrt(this->real * this->real + this->imaginary * this->imaginary);
 }

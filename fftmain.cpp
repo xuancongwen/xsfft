@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
         *(timeDomain + signalIndex) = (rand() % USHRT_MAX) - SHRT_MAX;  // Some (hopefully) gaussian noise
     }
 
-    bool success = xsFFT<short>(timeDomain, signalLength, freqDomain);
+    bool success = xsFFT(timeDomain, signalLength, freqDomain);
     for (long freqIndex = 0; freqIndex < signalLength; ++freqIndex) {
         std::cout << *(freqDomain + freqIndex) << "\t";
     }

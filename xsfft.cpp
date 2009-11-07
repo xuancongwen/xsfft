@@ -5,23 +5,75 @@
 
 const double xsPI = 3.14159265358979323846;
 
+// Private structures
+
+typedef struct {
+    long length;
+    xsComplex *data;
+} xsDoubleArray;
+
 // Private functions
 
-long _xsNextPowerOfTwo(long value);
+xsDoubleArray _xsFormatData(double *elements, long elementsSize);
+xsDoubleArray _xsFormatData(float *elements, long elementsSize);
+xsDoubleArray _xsFormatData(long *elements, long elementsSize);
+xsDoubleArray _xsFormatData(int *elements, long elementsSize);
+xsDoubleArray _xsFormatData(short *elements, long elementsSize);
+xsDoubleArray _xsFormatData(char *elements, long elementsSize);
 
-template <class T>
-long _xsCoerceRad2Input(T *elements, long numberOfElements);
-
-template <class T>
-void _xsFFTRecursive(xsComplex<T> *inElements, long inNumberOfElements, xsComplex<T> *outFrequencyComponents);
-
-template <class T>
-void _xsCoerceComplex(T *inElements, long inNumberOfElements, xsComplex<T> *outElements);
+void _xsFFTRecursive(xsComplex *inElements, long inNumberOfElements, xsComplex *outFrequencyComponents);
 
 // Public Method Implementations
 
-template <class T>
-bool xsFFT(T *inElements, long inNumberOfElements, T *outFrequencyComponents)
+bool xsFFT(double *inElements, long inNumberOfElements, double *outFrequencyComponents)
+{
+    if (!inElements) {
+        return false;
+    }
+    if (!outFrequencyComponents) {
+        return false;
+    }
+        
+    xsDoubleArray formattedData = _xsFormatData(inElements, inNumberOfElements);
+    
+    xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
+    }
+    
+    free(outFrequencyComponentsComplex);
+    free(formattedData.data);
+    
+    return true;
+}
+
+bool xsFFT(float *inElements, long inNumberOfElements, float *outFrequencyComponents)
+{
+    if (!inElements) {
+        return false;
+    }
+    if (!outFrequencyComponents) {
+        return false;
+    }
+    
+    xsDoubleArray formattedData = _xsFormatData(inElements, inNumberOfElements);
+    
+    xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
+    }
+    
+    free(outFrequencyComponentsComplex);
+    free(formattedData.data);
+    
+    return true;
+}
+
+bool xsFFT(long *inElements, long inNumberOfElements, long *outFrequencyComponents)
 {
     if (!inElements) {
         return false;
@@ -30,19 +82,92 @@ bool xsFFT(T *inElements, long inNumberOfElements, T *outFrequencyComponents)
         return false;
     }
 
-    long numberOfElementsRad2 = _xsCoerceRad2Input<T>(inElements, inNumberOfElements);
-
-    xsComplex<T> *inElementsComplex = (xsComplex<T> *)calloc(sizeof(xsComplex<T>), numberOfElementsRad2);
-
-    _xsCoerceComplex<T>(inElements, numberOfElementsRad2, inElementsComplex);
-    _xsFFTRecursive<T>(inElementsComplex, numberOfElementsRad2, outFrequencyComponents);
+    xsDoubleArray formattedData = _xsFormatData(inElements, inNumberOfElements);
     
-    free(inElementsComplex);
-
+    xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
+    }
+    
+    free(outFrequencyComponentsComplex);
+    free(formattedData.data);
+    
     return true;
 }
 
-// Private Method Implementation
+bool xsFFT(int *inElements, long inNumberOfElements, int *outFrequencyComponents)
+{
+    if (!inElements) {
+        return false;
+    }
+    if (!outFrequencyComponents) {
+        return false;
+    }
+    
+    xsDoubleArray formattedData = _xsFormatData(inElements, inNumberOfElements);
+    
+    xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
+    }
+    
+    free(outFrequencyComponentsComplex);
+    free(formattedData.data);
+    
+    return true;
+}
+
+bool xsFFT(short *inElements, long inNumberOfElements, short *outFrequencyComponents)
+{
+    if (!inElements) {
+        return false;
+    }
+    if (!outFrequencyComponents) {
+        return false;
+    }
+    
+    xsDoubleArray formattedData = _xsFormatData(inElements, inNumberOfElements);
+    
+    xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
+    }
+    
+    free(outFrequencyComponentsComplex);
+    free(formattedData.data);
+    
+    return true;
+}
+
+bool xsFFT(char *inElements, long inNumberOfElements, char *outFrequencyComponents)
+{
+    if (!inElements) {
+        return false;
+    }
+    if (!outFrequencyComponents) {
+        return false;
+    }
+    
+    xsDoubleArray formattedData = _xsFormatData(inElements, inNumberOfElements);
+    
+    xsComplex *outFrequencyComponentsComplex = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    _xsFFTRecursive(formattedData.data, formattedData.length, outFrequencyComponentsComplex);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        *(outFrequencyComponents + index) = (outFrequencyComponentsComplex + index)->magnitude();
+    }
+    
+    free(outFrequencyComponentsComplex);
+    free(formattedData.data);
+    
+    return true;
+}
 
 long xsNextPowerOfTwo(long value)
 {
@@ -50,64 +175,140 @@ long xsNextPowerOfTwo(long value)
     while (nextPowerOfTwo < value) {
         nextPowerOfTwo <<= 1;
     }
-
+    
     return nextPowerOfTwo;
 }
 
-template <class T>
-long _xsCoerceRad2Input(T *elements, long numberOfElements)
+
+// Private Method Implementation
+
+xsDoubleArray _xsFormatData(double *elements, long elementsSize)
 {
-    long idealNumberOfElements = xsNextPowerOfTwo(numberOfElements);
-    elements = (T *)realloc(elements, idealNumberOfElements);
-
-    for (long newIndex = numberOfElements; newIndex < idealNumberOfElements; ++newIndex) {
-        *(elements + newIndex) = (T)0;
+    xsDoubleArray formattedData;
+    formattedData.length = xsNextPowerOfTwo(elementsSize);
+    formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        xsComplex *curElement = formattedData.data + index;
+        curElement->real = *(elements + index);
+        curElement->imaginary = 0.0;
     }
-
-    return idealNumberOfElements;
+    
+    return formattedData;
 }
 
-template <class T>
-void _xsCoerceComplex(T *inElements, long inNumberOfElements, xsComplex<T> *outElements)
+xsDoubleArray _xsFormatData(float *elements, long elementsSize)
 {
-    // outElements is already allocated, and MUST be the same size as inNumberOfElements
-    for (long index = 0; index < inNumberOfElements; ++index) {
-        xsComplex<T> convertedElement(*(inElements + index), (T)0);
-        *(outElements + index) = convertedElement;
+    xsDoubleArray formattedData;
+    formattedData.length = xsNextPowerOfTwo(elementsSize);
+    formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        xsComplex *curElement = formattedData.data + index;
+        curElement->real = *(elements + index);
+        curElement->imaginary = 0.0;
     }
+    
+    return formattedData;
 }
 
-template <class T>
-void _xsFFTRecursive(xsComplex<T> *inElements, long inNumberOfElements, xsComplex<T> *outFrequencyComponents)
+xsDoubleArray _xsFormatData(long *elements, long elementsSize)
+{
+    xsDoubleArray formattedData;
+    formattedData.length = xsNextPowerOfTwo(elementsSize);
+    formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        xsComplex *curElement = formattedData.data + index;
+        curElement->real = *(elements + index);
+        curElement->imaginary = 0.0;
+    }
+    
+    return formattedData;
+}
+
+xsDoubleArray _xsFormatData(int *elements, long elementsSize)
+{
+    xsDoubleArray formattedData;
+    formattedData.length = xsNextPowerOfTwo(elementsSize);
+    formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        xsComplex *curElement = formattedData.data + index;
+        curElement->real = *(elements + index);
+        curElement->imaginary = 0.0;
+    }
+    
+    return formattedData;
+}
+
+xsDoubleArray _xsFormatData(short *elements, long elementsSize)
+{
+    xsDoubleArray formattedData;
+    formattedData.length = xsNextPowerOfTwo(elementsSize);
+    formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        xsComplex *curElement = formattedData.data + index;
+        curElement->real = *(elements + index);
+        curElement->imaginary = 0.0;
+    }
+    
+    return formattedData;
+}
+
+xsDoubleArray _xsFormatData(char *elements, long elementsSize)
+{
+    xsDoubleArray formattedData;
+    formattedData.length = xsNextPowerOfTwo(elementsSize);
+    formattedData.data = (xsComplex *)calloc(sizeof(xsComplex), formattedData.length);
+    
+    for (long index = 0; index < formattedData.length; ++index) {
+        xsComplex *curElement = formattedData.data + index;
+        curElement->real = *(elements + index);
+        curElement->imaginary = 0.0;
+    }
+    
+    return formattedData;
+}
+
+void _xsFFTRecursive(xsComplex *inElements, long inNumberOfElements, xsComplex *outFrequencyComponents)
 {
     if (inNumberOfElements == 1) {
         outFrequencyComponents = inElements;
         return;
     }
 
-    xsComplex<T> *evenElements = (xsComplex<T> *)calloc(inNumberOfElements / 2, sizeof(xsComplex<T>));
-    xsComplex<T> *oddElements = (xsComplex<T> *)calloc(inNumberOfElements / 2, sizeof(xsComplex<T>));
+    xsComplex *evenElements = (xsComplex *)calloc(inNumberOfElements / 2, sizeof(xsComplex));
+    xsComplex *oddElements = (xsComplex *)calloc(inNumberOfElements / 2, sizeof(xsComplex));
     for (long index = 0; index < inNumberOfElements / 2; ++index) {
         *(evenElements + index) = *(inElements + (index * 2));
         *(oddElements + index) = *(inElements + (index * 2) + 1);
     }
 
-    xsComplex<T> *evenFrequencyComponents = (xsComplex<T> *)calloc(inNumberOfElements / 2, sizeof(xsComplex<T>));
+    xsComplex *evenFrequencyComponents = (xsComplex *)calloc(inNumberOfElements / 2, sizeof(xsComplex));
     _xsFFTRecursive(evenElements, inNumberOfElements / 2, evenFrequencyComponents);
 
-    xsComplex<T> *oddFrequencyComponents = (xsComplex<T> *)calloc(inNumberOfElements / 2, sizeof(xsComplex<T>));
+    xsComplex *oddFrequencyComponents = (xsComplex *)calloc(inNumberOfElements / 2, sizeof(xsComplex));
     _xsFFTRecursive(oddElements, inNumberOfElements / 2, oddFrequencyComponents);
 
     free(evenElements);
     free(oddElements);
 
-    xsComplex<double> twiddleConstant;
+    xsComplex twiddleConstant;
     twiddleConstant.initWithEulerIdentity(2.0 * xsPI / (double)inNumberOfElements);
 
-    xsComplex<double> twiddleFactor(1.0, 0.0);
+    xsComplex twiddleFactor(1.0, 0.0);
     for (long frequencyIndex = 0; frequencyIndex < inNumberOfElements / 2; ++frequencyIndex) {
-        *(outFrequencyComponents + frequencyIndex) = *(evenFrequencyComponents + frequencyIndex) + twiddleFactor * (*(oddFrequencyComponents + frequencyIndex));
-        *(outFrequencyComponents + frequencyIndex + inNumberOfElements / 2) = *(evenFrequencyComponents + frequencyIndex) - twiddleFactor * (*(oddFrequencyComponents + frequencyIndex));
+        xsComplex *lowerHalf = (outFrequencyComponents + frequencyIndex);
+        xsComplex *bottomHalf = (outFrequencyComponents + frequencyIndex + inNumberOfElements / 2);
+        
+        xsComplex evenHalf = *(evenFrequencyComponents + frequencyIndex);
+        xsComplex oddHalf = *(oddFrequencyComponents + frequencyIndex);
+
+        *lowerHalf = evenHalf + twiddleFactor * oddHalf;
+        *bottomHalf = evenHalf - twiddleFactor * oddHalf;
+        
         twiddleFactor *= twiddleConstant;
     }
 

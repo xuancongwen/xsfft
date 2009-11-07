@@ -3,8 +3,12 @@
 
 extern const double xsPI;
 
-template <class T>
-bool xsFFT(T *inElements, long inNumberOfElements, T *outFrequencyComponents);
+bool xsFFT(double *inElements, long inNumberOfElements, double *outFrequencyComponents);
+bool xsFFT(float *inElements, long inNumberOfElements, float *outFrequencyComponents);
+bool xsFFT(long *inElements, long inNumberOfElements, long *outFrequencyComponents);
+bool xsFFT(int *inElements, long inNumberOfElements, int *outFrequencyComponents);
+bool xsFFT(short *inElements, long inNumberOfElements, short *outFrequencyComponents);
+bool xsFFT(char *inElements, long inNumberOfElements, char *outFrequencyComponents);
 
 long xsNextPowerOfTwo(long value);
 
