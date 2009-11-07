@@ -21,6 +21,9 @@ int main(int argc, char *argv[])
     }
 
     bool success = xsFFT(timeDomain, signalLength, freqDomain);
+    
+    puts(success ? "Success!\n" : "Fail...\n");
+    
     for (long freqIndex = 0; freqIndex < signalLength; ++freqIndex) {
         std::cout << *(freqDomain + freqIndex) << "\t";
     }
