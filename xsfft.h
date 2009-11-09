@@ -1,15 +1,38 @@
+// This implementation of xsComplex is based on LibRow's implementation.
+// See the original source here:
+//
+//      http://www.librow.com/articles/article-10
+//
+// The original code has been extensively modified.  For minimal memory use,
+// xsFFT only supports in-place algorithms.
+
 #ifndef XS_FFT
 #define XS_FFT
 
+#include "xscomplex.h"
+
 extern const double xsPI;
 
-bool xsFFT(double *inElements, long inNumberOfElements, double *outFrequencyComponents);
-bool xsFFT(float *inElements, long inNumberOfElements, float *outFrequencyComponents);
-bool xsFFT(long *inElements, long inNumberOfElements, long *outFrequencyComponents);
-bool xsFFT(int *inElements, long inNumberOfElements, int *outFrequencyComponents);
-bool xsFFT(short *inElements, long inNumberOfElements, short *outFrequencyComponents);
-bool xsFFT(char *inElements, long inNumberOfElements, char *outFrequencyComponents);
-
+///////////////////////////////////////////
+// For a given value, find the next highest
+// power of two
+///////////////////////////////////////////
 long xsNextPowerOfTwo(long value);
+
+////////////////////////////////////////////////
+// 
+//     data         - both input data and output
+//     dataLength   - length of input data
+////////////////////////////////////////////////
+bool xsFFT(xsComplex *const data, const long dataLength);
+
+//////////////////////////////////////////////////////////
+// INVERSE FOURIER TRANSFORM
+//     data         - both input data and output
+//     dataLength   - length of both input data and result
+//
+//     The result is always scaled
+//////////////////////////////////////////////////////////
+bool xsIFFT(xsComplex *const data, const long dataLength);
 
 #endif

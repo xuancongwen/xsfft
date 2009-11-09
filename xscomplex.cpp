@@ -2,171 +2,149 @@
 
 #include "xscomplex.h"
 
-// Initialization
- 
+//  Imaginary unity constants
+const xsComplex xsComplex::i(0.0, 1.0);
+const xsComplex xsComplex::j(0.0, 1.0);
+
+//  Initialization
+
 xsComplex::xsComplex()
 {
-    this->real = 0.0;
-    this->imaginary = 0.0;
+    _real = 0.0;
+    _imaginary = 0.0;
 }
 
-xsComplex::xsComplex(const long real_part, const long imaginary_part)
+xsComplex::xsComplex(const double real, const double imaginary)
 {
-    this->real = (double)real_part;
-    this->imaginary = (double)real_part;
+    _real = (double)real;
+    _imaginary = (double)imaginary;
 }
 
-xsComplex::xsComplex(const int real_part, const int imaginary_part)
+xsComplex::xsComplex(const double theta)
 {
-    this->real = (double)real_part;
-    this->imaginary = (double)real_part;
+    _real = cos(theta);
+    _imaginary = sin(theta);
 }
 
-xsComplex::xsComplex(const short real_part, const short imaginary_part)
-{
-    this->real = (double)real_part;
-    this->imaginary = (double)real_part;
+
+//  Getters
+
+const double xsComplex::real() const
+{ 
+    return _real;
 }
 
-xsComplex::xsComplex(const char real_part, const char imaginary_part)
-{
-    this->real = (double)real_part;
-    this->imaginary = (double)real_part;
+const double xsComplex::imaginary() const
+{ 
+    return _imaginary;
 }
 
-xsComplex::xsComplex(const xsComplex &toCopy)
+
+//  Setters
+
+xsComplex &xsComplex::operator=(const xsComplex &toCopy)
 {
-    this->real = toCopy.real;
-    this->imaginary = toCopy.imaginary;
-}
-
-// Euler's Identity
-
-void xsComplex::initWithEulerIdentity(const double theta)
-{
-    this->real = cos(theta);
-    this->imaginary = sin(theta);
-}
-
-void xsComplex::initWithEulerIdentity(const float theta)
-{
-    this->real = cos((double)theta);
-    this->imaginary = sin((double)theta);
-}
-
-void xsComplex::initWithEulerIdentity(const long theta)
-{
-    this->real = cos((double)theta);
-    this->imaginary = sin((double)theta);
-}
-
-void xsComplex::initWithEulerIdentity(const int theta)
-{
-    this->real = cos((double)theta);
-    this->imaginary = sin((double)theta);
-}
-
-void xsComplex::initWithEulerIdentity(const short theta)
-{
-    this->real = cos((double)theta);
-    this->imaginary = sin((double)theta);
-}
-
-void xsComplex::initWithEulerIdentity(const char theta)
-{
-    this->real = cos((double)theta);
-    this->imaginary = sin((double)theta);
-}
-
-// Assignment
-
-xsComplex &xsComplex::operator=(const xsComplex &right)
-{
-    if (this == &right) {
+    if (this == &toCopy) {
         return *this;
     }
     
-    this->real = right.real;
-    this->imaginary = right.imaginary;
+    _real = toCopy._real;
+    _imaginary = toCopy._imaginary;
     
     return *this;
 }
 
-// Equality
 
-bool xsComplex::operator==(const xsComplex &right) const
+//  Computed Values
+
+const double xsComplex::norm() const
 {
-    return this->real == right.real && this->imaginary == right.imaginary;
+    return _real * _real + _imaginary * _imaginary;
 }
 
-bool xsComplex::operator!=(const xsComplex &right) const
+xsComplex xsComplex::conjugate() const
 {
-    return !(*this == right);
+    return xsComplex(_real, -_imaginary);
 }
 
-// Addition
 
-const xsComplex xsComplex::operator+(const xsComplex &right) const
+//  Overloaded Operators
+
+xsComplex xsComplex::operator+(const xsComplex &right) const
 {
-    xsComplex sum = *this;
-    sum.real += right.real;
-    sum.imaginary += right.imaginary;
-    return sum;
+    return xsComplex(_real + right._real, _imaginary + right._imaginary);
+}
+
+xsComplex xsComplex::operator-(const xsComplex &right) const
+{
+    return xsComplex(_real - right._real, _imaginary - right._imaginary);
+}
+
+xsComplex xsComplex::operator*(const xsComplex &right) const
+{
+    return xsComplex(_real * right._real - _imaginary * right._imaginary, _real * right._imaginary + _imaginary * right._real);
+}
+
+xsComplex xsComplex::operator/(const xsComplex &right) const
+{
+    const double denominator = right._real * right._real + right._imaginary * right._imaginary;
+    return xsComplex((_real *  right._real + _imaginary *  right._imaginary) / denominator, (_imaginary * right._real - _real * right._imaginary) / denominator);
 }
 
 xsComplex &xsComplex::operator+=(const xsComplex &right)
 {
-    this->real += right.real;
-    this->imaginary += right.imaginary;
+    _real += right._real;
+    _imaginary += right._imaginary;
     return *this;
-}
-
-// Subtraction
-
-const xsComplex xsComplex::operator-(const xsComplex &right) const
-{
-    xsComplex difference = *this;
-    difference.real -= right.real;
-    difference.imaginary -= right.imaginary;
-    return difference;
 }
 
 xsComplex &xsComplex::operator-=(const xsComplex &right)
 {
-    this->real -= right.real;
-    this->imaginary -= right.real;
+    _real -= right._real;
+    _imaginary -= right._imaginary;
     return *this;
-}
-
-// Multiplication
-
-const xsComplex xsComplex::operator*(const xsComplex &right) const
-{
-    xsComplex product = *this;
-    product.real = this->real * right.real - this->imaginary * right.imaginary;
-    product.imaginary = this->real * right.imaginary + this->imaginary * right.real;
-    return product;
 }
 
 xsComplex &xsComplex::operator*=(const xsComplex &right)
 {
-    this->real = this->real * right.real - this->imaginary * right.imaginary;
-    this->imaginary = this->real * right.imaginary + this->imaginary * right.real;
+    const double temp = _real;
+    _real = _real * right._real - _imaginary * right._imaginary;
+    _imaginary = _imaginary * right._real + temp * right._imaginary;
     return *this;
 }
 
-// Conjugate
-
-xsComplex xsComplex::conjugate()
+xsComplex &xsComplex::operator/=(const xsComplex &right)
 {
-    xsComplex complexConjugate = *this;
-    complexConjugate.imaginary = -complexConjugate.imaginary;
-    return complexConjugate;
+    const double denominator = right._real * right._real + right._imaginary * right._imaginary;
+    const double temp = _real;
+    _real = (_real * right._real + _imaginary * right._imaginary) / denominator;
+    _imaginary = (_imaginary * right._real - temp * right._imaginary) / denominator;
+    return *this;
 }
 
-// Magnitude
-
-double xsComplex::magnitude()
+xsComplex &xsComplex::operator*=(const double right)
 {
-    return sqrt(this->real * this->real + this->imaginary * this->imaginary);
+    _real *= right;
+    _imaginary *= right;
+    return *this;
+}
+
+xsComplex &xsComplex::operator/=(const double right)
+{
+    _real /= right;
+    _imaginary /= right;
+    return *this;
+}
+
+
+//  Comparison
+
+bool xsComplex::operator==(const xsComplex &right) const
+{
+    return _real == right._real && _imaginary == right._imaginary;
+}
+
+bool xsComplex::operator!= (const xsComplex &right) const
+{
+    return _real != right._real || _imaginary != right._imaginary;
 }
