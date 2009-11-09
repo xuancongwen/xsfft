@@ -23,6 +23,9 @@ public:
     
 	//   Assignment
 	xsComplex &operator=(const xsComplex &toCopy);
+    void set(const double real, const double imaginary);
+    void setReal(const double real);
+    void setImaginary(const double imaginary);
     
 	//   Getters
 	const double real() const;
@@ -31,6 +34,7 @@ public:
 	//   Computed Values
 	xsComplex conjugate() const;
 	const double norm() const;
+    const double magnitude() const;
     
 	//   Overloaded Operators
 	xsComplex operator+(const xsComplex &right) const;

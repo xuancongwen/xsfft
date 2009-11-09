@@ -54,17 +54,38 @@ xsComplex &xsComplex::operator=(const xsComplex &toCopy)
     return *this;
 }
 
+void xsComplex::set(const double real, const double imaginary)
+{
+    _real = real;
+    _imaginary = imaginary;
+}
+
+void xsComplex::setReal(const double real)
+{
+    _real = real;
+}
+
+void xsComplex::setImaginary(const double imaginary)
+{
+    _imaginary = imaginary;
+}
+
 
 //  Computed Values
+
+xsComplex xsComplex::conjugate() const
+{
+    return xsComplex(_real, -_imaginary);
+}
 
 const double xsComplex::norm() const
 {
     return _real * _real + _imaginary * _imaginary;
 }
 
-xsComplex xsComplex::conjugate() const
+const double xsComplex::magnitude() const
 {
-    return xsComplex(_real, -_imaginary);
+    return sqrt(norm());
 }
 
 

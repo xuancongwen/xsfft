@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h>
 
 #include "xsfft.h"
 
@@ -6,15 +7,15 @@ const double xsPI = 3.14159265358979323846;
 
 // Private functions
 
-void _xsFormatInput(xsComplex *const data, const long dataLength);
-void _xsFFTHelper(xsComplex *const data, const long dataLength);
-void _xsIFFTHelper(xsComplex *const data, const long dataLength);
-void _xsScaleIFFT(xsComplex *const data, const long dataLength);
+void _xsFormatInput(xsComplex *data, const long dataLength);
+void _xsFFTHelper(xsComplex *data, const long dataLength);
+void _xsIFFTHelper(xsComplex *data, const long dataLength);
+void _xsScaleIFFT(xsComplex *data, const long dataLength);
 
 
 // Public method implementations
 
-long xsNextPowerOfTwo(long value)
+long xsNextPowerOfTwo(const long value)
 {
     long nextPowerOfTwo = 1;
     while (nextPowerOfTwo < value) {
@@ -24,7 +25,23 @@ long xsNextPowerOfTwo(long value)
     return nextPowerOfTwo;
 }
 
-bool xsFFT(xsComplex *const data, const long dataLength)
+void xsCoerceDataRadix2(xsComplex *data, long *dataLength)
+{
+    long newLength = xsNextPowerOfTwo(*dataLength);
+    if (newLength == *dataLength) {
+        return;
+    }
+    
+    data = (xsComplex *)realloc(data, newLength);
+    xsComplex *dataIterator = data;
+    for (long index = *dataLength; index < newLength; ++index, ++dataIterator) {
+        dataIterator = new xsComplex(0.0, 0.0);
+    }
+    
+    *dataLength = newLength;
+}
+
+bool xsFFT(xsComplex *data, const long dataLength)
 {
 	if (!data || dataLength < 1 || dataLength & (dataLength - 1)) {
         return false;
@@ -36,7 +53,7 @@ bool xsFFT(xsComplex *const data, const long dataLength)
 	return true;
 }
 
-bool xsIFFT(xsComplex *const data, const long dataLength)
+bool xsIFFT(xsComplex *data, const long dataLength)
 {
 	if (!data || dataLength < 1 || dataLength & (dataLength - 1)) {
         return false;
@@ -52,7 +69,7 @@ bool xsIFFT(xsComplex *const data, const long dataLength)
 
 // Private method implementations
 
-void _xsFormatInput(xsComplex *const data, const long dataLength)
+void _xsFormatInput(xsComplex *data, const long dataLength)
 {
 	long target = 0;
 	for (unsigned int dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
@@ -70,7 +87,7 @@ void _xsFormatInput(xsComplex *const data, const long dataLength)
 	}
 }
 
-void _xsFFTHelper(xsComplex *const data, const long dataLength)
+void _xsFFTHelper(xsComplex *data, const long dataLength)
 {
 	//   Perform butterflies...
 	for (long step = 1; step < dataLength; step <<= 1) {
@@ -103,7 +120,7 @@ void _xsFFTHelper(xsComplex *const data, const long dataLength)
 	}
 }
 
-void _xsIFFTHelper(xsComplex *const data, const long dataLength)
+void _xsIFFTHelper(xsComplex *data, const long dataLength)
 {
     //   Perform butterflies...
 	for (long step = 1; step < dataLength; step <<= 1) {
@@ -137,7 +154,7 @@ void _xsIFFTHelper(xsComplex *const data, const long dataLength)
 }
 
 //   Scaling of inverse FFT result
-void _xsScaleIFFT(xsComplex *const data, const long dataLength)
+void _xsScaleIFFT(xsComplex *data, const long dataLength)
 {
 	const double scaleFactor = 1.0 / double(dataLength);
 	//   Scale all data entries

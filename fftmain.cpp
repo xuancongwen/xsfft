@@ -14,19 +14,20 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    long signalLength = 128;
-    xsComplex *data = (xsComplex *)calloc(signalLength, sizeof(xsComplex));
+    long dataLength = 100;
+    xsComplex *data = new xsComplex[dataLength];
 
     srand(0);
     xsComplex *dataIterator = data;
-    for(long signalIndex = 0; signalIndex < signalLength; ++signalIndex, ++dataIterator) {
-        dataIterator = new xsComplex((rand() % USHRT_MAX) - SHRT_MAX, 0.0);  // Some (hopefully) gaussian noise
-        //dataIterator = sin(2 * xsPI * signalIndex);
-        //dataIterator = signalIndex;
+    for(long signalIndex = 0; signalIndex < dataLength; ++signalIndex, ++dataIterator) {
+        //dataIterator->set((rand() % USHRT_MAX) - SHRT_MAX, 0.0);
+        //dataIterator->set(sin(2 * xsPI * signalIndex), 0.0);
+        dataIterator->set(signalIndex, 0.0);
         cout << dataIterator->real() << "\n";
     }
 
-    bool success = xsFFT(data, signalLength);
+    xsCoerceDataRadix2(data, &dataLength);
+    bool success = xsFFT(data, dataLength);
     
     if (success) {
         cout << "\n\nSuccess!\n\n";
@@ -35,8 +36,8 @@ int main(int argc, char *argv[])
     }
     
     dataIterator = data;
-    for(long freqIndex = 0; freqIndex < signalLength; ++freqIndex) {
-        cout << dataIterator->norm() << "\n";
+    for(long freqIndex = 0; freqIndex < dataLength; ++freqIndex, ++dataIterator) {
+        cout << dataIterator->magnitude() << "\n";
     }
     
     puts("\n");

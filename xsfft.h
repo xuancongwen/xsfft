@@ -17,14 +17,19 @@ extern const double xsPI;
 // For a given value, find the next highest
 // power of two
 ///////////////////////////////////////////
-long xsNextPowerOfTwo(long value);
+long xsNextPowerOfTwo(const long value);
+
+///////////////////////////////////////////
+// Coerces the incoming array into a radix
+// 2 array.
+///////////////////////////////////////////
+void xsCoerceDataRadix2(xsComplex *data, long *dataLength);
 
 ////////////////////////////////////////////////
-// 
 //     data         - both input data and output
 //     dataLength   - length of input data
 ////////////////////////////////////////////////
-bool xsFFT(xsComplex *const data, const long dataLength);
+bool xsFFT(xsComplex *data, const long dataLength);
 
 //////////////////////////////////////////////////////////
 // INVERSE FOURIER TRANSFORM
@@ -33,6 +38,6 @@ bool xsFFT(xsComplex *const data, const long dataLength);
 //
 //     The result is always scaled
 //////////////////////////////////////////////////////////
-bool xsIFFT(xsComplex *const data, const long dataLength);
+bool xsIFFT(xsComplex *data, const long dataLength);
 
 #endif
