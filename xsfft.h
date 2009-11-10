@@ -1,4 +1,4 @@
-// This implementation of xsComplex is based on LibRow's implementation.
+// The implementation of the Cooley-Tukey FFT is based on LibRow's implementation.
 // See the original source here:
 //
 //      http://www.librow.com/articles/article-10
@@ -38,5 +38,13 @@ bool xsFFT(xsComplex *data, const long dataLength);
 //     The result is always scaled
 //////////////////////////////////////////////////////////
 bool xsIFFT(xsComplex *data, const long dataLength);
+
+////////////////////////////////////////////////////
+// Uses FFT interpolation to
+// produce an upsampled data array in place.
+// Each call will scale the number of data points
+// up by a factor of 2.
+////////////////////////////////////////////////////
+void xsUpSample(xsComplex *data, long *dataLength);
 
 #endif

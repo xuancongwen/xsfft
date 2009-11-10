@@ -35,7 +35,7 @@ void xsCoerceDataRadix2(xsComplex *data, long *dataLength)
     data = (xsComplex *)realloc(data, newLength);
     xsComplex *dataIterator = data;
     for (long index = *dataLength; index < newLength; ++index, ++dataIterator) {
-        dataIterator = new xsComplex(0.0, 0.0);
+        dataIterator->set(0.0, 0.0);
     }
     
     *dataLength = newLength;
@@ -74,7 +74,7 @@ void _xsFormatInput(xsComplex *data, const long dataLength)
 	long target = 0;
 	for (unsigned int dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
 		if (target > dataIndex) {
-			xsComplex temp(*(data + target));
+			xsComplex temp((data + target)->real(), (data + target)->imaginary());
 			*(data + target) = *(data + dataIndex);
 			*(data + dataIndex) = temp;
 		}
@@ -100,7 +100,7 @@ void _xsFFTHelper(xsComplex *data, const long dataLength)
 		//   Multiplier for trigonometric recurrence
 		xsComplex Multiplier(-2.0 * Sine * Sine, sin(delta));
 		//   Start value for transform factor, fi = 0
-		xsComplex Factor(1.0);
+		xsComplex Factor(1.0, 0.0);
 		//   Iteration through groups of different transform factor
 		for (long Group = 0; Group < step; ++Group) {
 			//   Iteration within group 
@@ -108,7 +108,7 @@ void _xsFFTHelper(xsComplex *data, const long dataLength)
 				//   Match position
 				long Match = Pair + step;
 				//   Second term of two-point transform
-				xsComplex Product(Factor * data[Match]);
+				xsComplex Product((Factor * data[Match]).real(), (Factor * data[Match]).imaginary());
 				//   Transform for fi + pi
 				data[Match] = data[Pair] - Product;
 				//   Transform for fi
@@ -133,7 +133,7 @@ void _xsIFFTHelper(xsComplex *data, const long dataLength)
 		//   Multiplier for trigonometric recurrence
 		xsComplex Multiplier(-2.0 * Sine * Sine, sin(delta));
 		//   Start value for transform factor, fi = 0
-		xsComplex Factor(1.0);
+		xsComplex Factor(1.0, 0.0);
 		//   Iteration through groups of different transform factor
 		for (long Group = 0; Group < step; ++Group) {
 			//   Iteration within group 
@@ -141,7 +141,7 @@ void _xsIFFTHelper(xsComplex *data, const long dataLength)
 				//   Match position
 				unsigned int Match = Pair + step;
 				//   Second term of two-point transform
-				xsComplex Product(Factor * data[Match]);
+				xsComplex Product((Factor * data[Match]).real(), (Factor * data[Match]).imaginary());
 				//   Transform for f_i + p_i
 				data[Match] = data[Pair] - Product;
 				//   Transform for fi

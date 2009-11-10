@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     
     dataIterator = data;
     for(long freqIndex = 0; freqIndex < dataLength; ++freqIndex, ++dataIterator) {
-        cout << dataIterator->magnitude() << "\n";
+        cout << dataIterator->real() << "\n";
     }
     
     puts("\n");
