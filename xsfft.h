@@ -21,20 +21,19 @@ long xsNextPowerOfTwo(const long value);
 
 ///////////////////////////////////////////
 // Coerces the incoming array into a radix
-// 2 array.
+// 2 array in place.
 ///////////////////////////////////////////
 void xsCoerceDataRadix2(xsComplex *data, long *dataLength);
 
 ////////////////////////////////////////////////
-//     data         - both input data and output
-//     dataLength   - length of input data
+// FORWARD FAST FOURIER TRANSFORM
+//     Performs the FFT in place.
 ////////////////////////////////////////////////
 bool xsFFT(xsComplex *data, const long dataLength);
 
 //////////////////////////////////////////////////////////
-// INVERSE FOURIER TRANSFORM
-//     data         - both input data and output
-//     dataLength   - length of both input data and result
+// INVERSE FAST FOURIER TRANSFORM
+//     Perform the FFT in place.
 //
 //     The result is always scaled
 //////////////////////////////////////////////////////////
