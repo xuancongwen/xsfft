@@ -20,9 +20,10 @@ int main(int argc, char *argv[])
     srand(0);
     xsComplex *dataIterator = data;
     for(long signalIndex = 0; signalIndex < dataLength; ++signalIndex, ++dataIterator) {
+        dataIterator->set(1.0, 0.0);
         //dataIterator->set((rand() % USHRT_MAX) - SHRT_MAX, 0.0);
         //dataIterator->set(sin(2.0 * xsPI * (double)signalIndex), 0.0);
-        dataIterator->set((double)signalIndex, 0.0);
+        //dataIterator->set((double)signalIndex, 0.0);
         cout << dataIterator->real() << "\n";
     }
 

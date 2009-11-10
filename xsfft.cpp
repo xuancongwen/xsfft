@@ -8,8 +8,7 @@ const double xsPI = 3.14159265358979323846;
 // Private functions
 
 void _xsFormatInput(xsComplex *data, const long dataLength);
-void _xsFFTHelper(xsComplex *data, const long dataLength);
-void _xsIFFTHelper(xsComplex *data, const long dataLength);
+void _xsTransformHelper(xsComplex *data, const long dataLength, const double signedPI);
 void _xsScaleIFFT(xsComplex *data, const long dataLength);
 
 
@@ -48,7 +47,7 @@ bool xsFFT(xsComplex *data, const long dataLength)
     }
     
 	_xsFormatInput(data, dataLength);
-	_xsFFTHelper(data, dataLength);
+    _xsTransformHelper(data, dataLength, xsPI);
     
 	return true;
 }
@@ -60,7 +59,7 @@ bool xsIFFT(xsComplex *data, const long dataLength)
     }
     
 	_xsFormatInput(data, dataLength);
-	_xsIFFTHelper(data, dataLength);
+    _xsTransformHelper(data, dataLength, -xsPI);
 	_xsScaleIFFT(data, dataLength);
     
 	return true;
@@ -87,14 +86,14 @@ void _xsFormatInput(xsComplex *data, const long dataLength)
 	}
 }
 
-void _xsFFTHelper(xsComplex *data, const long dataLength)
+void _xsTransformHelper(xsComplex *data, const long dataLength, const double signedPI)
 {
 	//   Perform butterflies...
 	for (long step = 1; step < dataLength; step <<= 1) {
 		//   Jump to the next entry of the same transform factor
 		long Jump = step << 1;
 		//   Angle increment
-		double delta = xsPI / double(step);
+		double delta = signedPI / double(step);
 		//   Auxiliary sin(delta / 2)
 		double Sine = sin(delta * .5);
 		//   Multiplier for trigonometric recurrence
@@ -110,39 +109,6 @@ void _xsFFTHelper(xsComplex *data, const long dataLength)
 				//   Second term of two-point transform
 				xsComplex Product((Factor * data[Match]).real(), (Factor * data[Match]).imaginary());
 				//   Transform for fi + pi
-				data[Match] = data[Pair] - Product;
-				//   Transform for fi
-				data[Pair] += Product;
-			}
-			//   Successive transform factor via trigonometric recurrence
-			Factor = Multiplier * Factor + Factor;
-		}
-	}
-}
-
-void _xsIFFTHelper(xsComplex *data, const long dataLength)
-{
-    //   Perform butterflies...
-	for (long step = 1; step < dataLength; step <<= 1) {
-		//   Jump to the next entry of the same transform factor
-		long Jump = step << 1;
-		//   Angle increment
-		double delta = -xsPI / double(step);
-		//   Auxiliary sin(delta / 2)
-		double Sine = sin(delta * .5);
-		//   Multiplier for trigonometric recurrence
-		xsComplex Multiplier(-2.0 * Sine * Sine, sin(delta));
-		//   Start value for transform factor, fi = 0
-		xsComplex Factor(1.0, 0.0);
-		//   Iteration through groups of different transform factor
-		for (long Group = 0; Group < step; ++Group) {
-			//   Iteration within group 
-			for (long Pair = Group; Pair < dataLength; Pair += Jump) {
-				//   Match position
-				unsigned int Match = Pair + step;
-				//   Second term of two-point transform
-				xsComplex Product((Factor * data[Match]).real(), (Factor * data[Match]).imaginary());
-				//   Transform for f_i + p_i
 				data[Match] = data[Pair] - Product;
 				//   Transform for fi
 				data[Pair] += Product;
