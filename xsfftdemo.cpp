@@ -15,7 +15,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     long dataLength = 100;
-    xsComplex *data = new xsComplex[dataLength];
+    xsComplex *data = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
 
     srand(0);
     xsComplex *dataIterator = data;
@@ -39,8 +39,6 @@ int main(int argc, char *argv[])
     for(long freqIndex = 0; freqIndex < dataLength; ++freqIndex, ++dataIterator) {
         cout << dataIterator->real() << "\n";
     }
-    
-    puts("\n");
 
     free(data);
 
