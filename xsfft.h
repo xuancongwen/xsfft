@@ -28,6 +28,6 @@ bool xsIFFT(xsComplex *data, const unsigned long dataLength);
 
 // Useful functions that utilize FFTs
 
-void xsUpSample(xsComplex *data, unsigned long *dataLength);
+void xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength); // Upsamples to the next power of two elements
 
 #endif

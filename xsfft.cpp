@@ -69,6 +69,45 @@ bool xsIFFT(xsComplex *data, const unsigned long dataLength)
 }
 
 
+// Useful functions that utilize FFTs
+
+void xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength)
+{
+    // Setup
+    xsCoerceDataRadix2(data, dataLength);
+    unsigned long oldLength = *dataLength;
+    unsigned long newLength = oldLength << 1;
+    
+    // FFT
+    xsFFT(data, oldLength);
+    
+    // Zero pad
+    data = (xsComplex *)realloc(data, sizeof(xsComplex) * newLength);
+    
+    unsigned long rightHalfFirstIndex = 3 * oldLength / 2;
+    unsigned long zeroPadFirstIndex = oldLength / 2;
+    
+    xsComplex center(*(data + zeroPadFirstIndex));
+    *(data + zeroPadFirstIndex) = center / 2.0;
+    *(data + rightHalfFirstIndex) = center / 2.0;
+    
+    for (unsigned long zeroPadIndex = 1; zeroPadIndex < oldLength / 2; ++zeroPadIndex) {
+        *(data + rightHalfFirstIndex + zeroPadIndex) = *(data + zeroPadFirstIndex + zeroPadIndex);
+        (data + zeroPadFirstIndex + zeroPadIndex)->set(0.0, 0.0);
+    }
+    
+    *dataLength = newLength;
+    
+    // Power has been halved at this point, we need to scale
+    for (unsigned long index = 0; index < newLength; ++index) {
+        *(data + index) *= 2.0;
+    }
+    
+    // IFFT
+    xsIFFT(data, newLength);
+}
+
+
 // Private method implementations
 
 void _xsFormatInput(xsComplex *data, const unsigned long dataLength)
@@ -77,8 +116,8 @@ void _xsFormatInput(xsComplex *data, const unsigned long dataLength)
 	for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
 		if (target > dataIndex) {
 			xsComplex temp((data + target)->real(), (data + target)->imaginary());
-            (data + target)->set((data + dataIndex)->real(), (data + dataIndex)->imaginary());
-			(data + dataIndex)->set(temp.real(), temp.imaginary());
+            *(data + target) = *(data + dataIndex);
+			*(data + dataIndex) = temp;
 		}
         
 		unsigned long targetBitMask = dataLength;
@@ -95,22 +134,14 @@ void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const d
     //   Perform butterflies...
 	for (unsigned long step = 1; step < dataLength; step <<= 1) {
 		double sine = sin(signedPI / double(step) * 0.5);
-		//   Twiddle Constant
 		xsComplex twiddleMultiplier(-2.0 * sine * sine, sin(signedPI / double(step)));
-		//   Start value for transform factor
 		xsComplex twiddleFactor(1.0);
-		//   Iteration through groups of different transform factor
 		for (unsigned long group = 0; group < step; ++group) {
-			//   Iteration within group 
 			for (unsigned long pair = group; pair < dataLength; pair += (step << 1)) {
-				//   Match position
 				unsigned long match = pair + step;
-				//   Second term of two-point transform
-				xsComplex product(twiddleFactor * data[match]);
-				//   Transform for fi + pi
-				data[match] = data[pair] - product;
-				//   Transform for fi
-				data[pair] += product;
+				xsComplex product(twiddleFactor * *(data + match));
+				*(data + match) = *(data + pair) - product;
+				*(data + pair) += product;
 			}
             
 			twiddleFactor = twiddleMultiplier * twiddleFactor + twiddleFactor;

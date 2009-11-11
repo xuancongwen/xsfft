@@ -18,44 +18,45 @@ int main(int argc, char *argv[])
     xsComplex *data = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
 
     srand(0);
-    xsComplex *dataIterator = data;
-    for(unsigned long signalIndex = 0; signalIndex < dataLength; ++signalIndex, ++dataIterator) {
-        //dataIterator->set(1.0, 0.0);
-        //dataIterator->set((rand() % USHRT_MAX) - SHRT_MAX, 0.0);
-        //dataIterator->set(sin(2.0 * xsPI * (double)signalIndex), 0.0);
+    for(unsigned long signalIndex = 0; signalIndex < dataLength; ++signalIndex) {
         if (signalIndex < 100) {
-            dataIterator->set((double)signalIndex, 0.0);
+            (data + signalIndex)->set((double)signalIndex, 0.0);
         } else {
-            dataIterator->set(0.0, 0.0);
+            (data + signalIndex)->set(0.0, 0.0);
         }
-        cout << dataIterator->real() << "\n";
+        cout << (data + signalIndex)->real() << endl;
     }
 
     xsCoerceDataRadix2(data, &dataLength);
+    
+    cout << "-------------------------------FFT---------------------------------------" << endl;
+    
     bool success = xsFFT(data, dataLength);
-    
-    if (success) {
-        cout << "\n\nFFT WIN!!\n\n";
-    } else {
-        cout << "\n\nFFT FAIL...\n\n";
+    for(long freqIndex = 0; freqIndex < dataLength; ++freqIndex) {
+        cout << (data + freqIndex)->real() << endl;
     }
     
-    dataIterator = data;
-    for(long freqIndex = 0; freqIndex < dataLength; ++freqIndex, ++dataIterator) {
-        cout << dataIterator->real() << "\n";
-    }
+    cout << "-------------------------------IFFT--------------------------------------" << endl;
     
     success = xsIFFT(data, dataLength);
-    
-    if (success) {
-        cout << "\n\nIFFT WIN!!\n\n";
-    } else {
-        cout << "\n\nIFFT FAIL...\n\n";
+    for(unsigned long freqIndex = 0; freqIndex < dataLength; ++freqIndex) {
+        cout << (data + freqIndex)->real() << endl;
     }
     
-    dataIterator = data;
-    for(unsigned long freqIndex = 0; freqIndex < dataLength; ++freqIndex, ++dataIterator) {
-        cout << dataIterator->real() << "\n";
+    cout << "--------------------------Interpolation----------------------------------" << endl;
+    
+    for(unsigned long signalIndex = 0; signalIndex < dataLength; ++signalIndex) {
+        if (signalIndex < 100) {
+            (data + signalIndex)->set((double)signalIndex, 0.0);
+        } else {
+            (data + signalIndex)->set(0.0, 0.0);
+        }
+        cout << (data + signalIndex)->real() << endl;
+    }
+    
+    xsInterpolateWithFactor2(data, &dataLength);
+    for(unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
+        cout << (data + dataIndex)->real() << endl;
     }
 
     free(data);
