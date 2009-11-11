@@ -26,41 +26,15 @@ int main(int argc, char *argv[])
         }
         cout << (data + signalIndex)->real() << endl;
     }
-
-    xsComplex *coercedData = xsCoerceDataRadix2(data, &dataLength);
-    
-    cout << "-------------------------------FFT---------------------------------------" << endl;
-    
-    bool success = xsFFT(coercedData, dataLength);
-    for(long freqIndex = 0; freqIndex < dataLength; ++freqIndex) {
-        cout << (data + freqIndex)->real() << endl;
-    }
-    
-    cout << "-------------------------------IFFT--------------------------------------" << endl;
-    
-    success = xsIFFT(coercedData, dataLength);
-    for(unsigned long freqIndex = 0; freqIndex < dataLength; ++freqIndex) {
-        cout << (coercedData + freqIndex)->real() << endl;
-    }
     
     cout << "--------------------------Interpolation----------------------------------" << endl;
     
-    for(unsigned long signalIndex = 0; signalIndex < dataLength; ++signalIndex) {
-        if (signalIndex < 100) {
-            (coercedData + signalIndex)->set((double)signalIndex, 0.0);
-        } else {
-            (coercedData + signalIndex)->set(0.0, 0.0);
-        }
-    }
-    
-    xsComplex *interpolatedData = xsInterpolateWithFactor2(data, &dataLength);
+    data = xsInterpolateWithFactor2(data, &dataLength);
     for(unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        cout << (interpolatedData + dataIndex)->real() << endl;
+        cout << (data + dataIndex)->real() << endl;
     }
 
-    //free(data);
-    //free(coercedData);
-    //free(interpolatedData);
+    free(data);
 
-    return success ? 0 : -1;
+    return 0;
 }
