@@ -1,6 +1,5 @@
 /* 
- This is a bit of a demo app in that this will take the FFT of a file that contains a column vector of
- elements.  This function does not care how many elements are in the input file.
+ This contains testing for xsComplex and xsFFT.
  */
 
 #include <iostream>
@@ -10,8 +9,21 @@
 
 using namespace std;
 
+// Private methods to be tested
+
+void _xsFormatInput(xsComplex *data, const unsigned long dataLength);
+void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const double signedPI);
+void _xsScaleIFFT(xsComplex *data, const unsigned long dataLength);
+xsComplex *_xsReverseCopy(xsComplex *data, const unsigned long dataLength);
+
+
+// Function prototypes
+
 inline void testComplexNumbers();
 inline void testFFTs();
+
+
+// Program entrypoint
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +34,9 @@ int main(int argc, char *argv[])
     
     return 0;
 }
+
+
+// Test implementations
 
 inline void testComplexNumbers()
 {
