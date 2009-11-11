@@ -84,7 +84,7 @@ void _xsFormatInput(xsComplex *data, const unsigned long dataLength)
 		unsigned long targetBitMask = dataLength;
 
 		while (target & (targetBitMask >>= 1)) {
-			target &= targetBitMask;
+			target &= ~targetBitMask;
         }
 		target |= targetBitMask;
 	}
@@ -94,23 +94,23 @@ void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const d
 {
     //   Perform butterflies...
 	for (unsigned long step = 1; step < dataLength; step <<= 1) {
-		double Sine = sin(signedPI / double(step) * 0.5);
+		double sine = sin(signedPI / double(step) * 0.5);
 		//   Twiddle Constant
-		xsComplex twiddleMultiplier(-2.0 * Sine * Sine, sin(signedPI / double(step)));
+		xsComplex twiddleMultiplier(-2.0 * sine * sine, sin(signedPI / double(step)));
 		//   Start value for transform factor
 		xsComplex twiddleFactor(1.0);
 		//   Iteration through groups of different transform factor
-		for (unsigned long Group = 0; Group < step; ++Group) {
+		for (unsigned long group = 0; group < step; ++group) {
 			//   Iteration within group 
-			for (unsigned long Pair = Group; Pair < dataLength; Pair += (step << 1)) {
+			for (unsigned long pair = group; pair < dataLength; pair += (step << 1)) {
 				//   Match position
-				unsigned long Match = Pair + step;
+				unsigned long match = pair + step;
 				//   Second term of two-point transform
-				xsComplex Product(twiddleFactor * data[Match]);
+				xsComplex product(twiddleFactor * data[match]);
 				//   Transform for fi + pi
-				data[Match] = data[Pair] - Product;
+				data[match] = data[pair] - product;
 				//   Transform for fi
-				data[Pair] += Product;
+				data[pair] += product;
 			}
             
 			twiddleFactor = twiddleMultiplier * twiddleFactor + twiddleFactor;
@@ -135,7 +135,7 @@ void _xsScaleIFFT(xsComplex *data, const unsigned long dataLength)
 {
 	const double scaleFactor = 1.0 / double(dataLength);
 	//   Scale all data entries
-	for (unsigned long dataPosition = 0; dataPosition < dataLength; ++dataPosition) {
-        *(data + dataPosition) *= scaleFactor;
+	for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
+        *(data + dataIndex) *= scaleFactor;
     }
 }
