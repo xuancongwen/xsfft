@@ -4,8 +4,6 @@
 */
 
 #include <iostream>
-#include <stdlib.h>
-#include <limits.h>
 #include <math.h>
 
 #include "xsfft.h"
@@ -15,17 +13,12 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     unsigned long dataLength = 100;
-    xsComplex *data = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
-
-    srand(0);
-    for(unsigned long signalIndex = 0; signalIndex < dataLength; ++signalIndex) {
-        if (signalIndex < 100) {
-            (data + signalIndex)->set((double)signalIndex, 0.0);
-        } else {
-            (data + signalIndex)->set(0.0, 0.0);
-        }
-        cout << (data + signalIndex)->real() << endl;
-    }
+    int *rawData = (int *)calloc(dataLength, sizeof(int));
+    for (unsigned long signalIndex = 0; signalIndex < dataLength; ++signalIndex, *(rawData + signalIndex) = signalIndex);
+    
+    xsComplex *data = xsAllocArray(rawData, dataLength);
+    
+    free(rawData);
     
     cout << "--------------------------Interpolation----------------------------------" << endl;
     
@@ -34,7 +27,7 @@ int main(int argc, char *argv[])
         cout << (data + dataIndex)->real() << endl;
     }
 
-    free(data);
+    xsFreeArray(data);
 
     return 0;
 }

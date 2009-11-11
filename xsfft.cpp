@@ -11,6 +11,80 @@ void _xsScaleIFFT(xsComplex *data, const unsigned long dataLength);
 xsComplex *_xsReverseCopy(xsComplex *data, const unsigned long dataLength);
 
 
+// Complex array creation/destruction
+
+xsComplex *xsAllocArray(double *data, unsigned long dataLength)
+{
+    xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
+    
+    for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
+        (newData + dataIndex)->set(*(data + dataIndex), 0.0);
+    }
+    
+    return newData;
+}
+
+xsComplex *xsAllocArray(float *data, unsigned long dataLength)
+{
+    xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
+    
+    for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
+        (newData + dataIndex)->set(double(*(data + dataIndex)), 0.0);
+    }
+    
+    return newData;
+}
+
+xsComplex *xsAllocArray(long *data, unsigned long dataLength)
+{
+    xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
+    
+    for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
+        (newData + dataIndex)->set(double(*(data + dataIndex)), 0.0);
+    }
+    
+    return newData;
+}
+
+xsComplex *xsAllocArray(int *data, unsigned long dataLength)
+{
+    xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
+    
+    for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
+        (newData + dataIndex)->set(double(*(data + dataIndex)), 0.0);
+    }
+    
+    return newData;
+}
+
+xsComplex *xsAllocArray(short *data, unsigned long dataLength)
+{
+    xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
+    
+    for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
+        (newData + dataIndex)->set(double(*(data + dataIndex)), 0.0);
+    }
+    
+    return newData;
+}
+
+xsComplex *xsAllocArray(char *data, unsigned long dataLength)
+{
+    xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
+    
+    for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
+        (newData + dataIndex)->set(double(*(data + dataIndex)), 0.0);
+    }
+    
+    return newData;
+}
+
+void xsFreeArray(xsComplex *data)
+{
+    free(data);
+}
+
+
 // Public method implementations
 
 unsigned long xsNextPowerOfTwo(const unsigned long value)

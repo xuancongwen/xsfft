@@ -13,6 +13,17 @@
 
 #include "xscomplex.h"
 
+// Complex array creation/destruction
+
+xsComplex *xsAllocArray(double *data, unsigned long dataLength);
+xsComplex *xsAllocArray(float *data, unsigned long dataLength);
+xsComplex *xsAllocArray(long *data, unsigned long dataLength);
+xsComplex *xsAllocArray(int *data, unsigned long dataLength);
+xsComplex *xsAllocArray(short *data, unsigned long dataLength);
+xsComplex *xsAllocArray(char *data, unsigned long dataLength);
+
+void xsFreeArray(xsComplex *data);
+
 // Find the next power of two for a given number
 
 unsigned long xsNextPowerOfTwo(const unsigned long value);
