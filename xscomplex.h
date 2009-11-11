@@ -18,7 +18,7 @@ public:
 	//   Initialization
 	xsComplex();
 	xsComplex(double real, double imaginary);
-	xsComplex(double real);  // Euler initialization
+	xsComplex(double real);
     
 	//   Assignment
 	xsComplex &operator=(const double real);
