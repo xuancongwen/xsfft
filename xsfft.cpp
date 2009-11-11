@@ -27,20 +27,21 @@ unsigned long xsNextPowerOfTwo(const unsigned long value)
     return nextPowerOfTwo;
 }
 
-void xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength)
+xsComplex *xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength)
 {
     unsigned long newLength = xsNextPowerOfTwo(*dataLength);
     if (newLength == *dataLength) {
-        return;
+        return data;
     }
     
     data = (xsComplex *)realloc(data, sizeof(xsComplex) * newLength);
-    xsComplex *dataIterator = (data + *dataLength);
-    for (unsigned long index = *dataLength; index < newLength; ++index, ++dataIterator) {
-        dataIterator->set(0.0, 0.0);
+    for (unsigned long index = *dataLength; index < newLength; ++index) {
+        (data + index)->set(0.0, 0.0);
     }
     
     *dataLength = newLength;
+    
+    return data;
 }
 
 bool xsFFT(xsComplex *data, const unsigned long dataLength)
@@ -71,7 +72,7 @@ bool xsIFFT(xsComplex *data, const unsigned long dataLength)
 
 // Useful functions that utilize FFTs
 
-void xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength)
+xsComplex *xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength)
 {
     // Setup
     xsCoerceDataRadix2(data, dataLength);
@@ -105,6 +106,8 @@ void xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength)
     
     // IFFT
     xsIFFT(data, newLength);
+    
+    return data;
 }
 
 

@@ -19,7 +19,7 @@ unsigned long xsNextPowerOfTwo(const unsigned long value);
 
 // Ensure power of 2 number of input
 
-void xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength);
+xsComplex *xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength);
 
 // FFT and IFFT
 
@@ -28,6 +28,6 @@ bool xsIFFT(xsComplex *data, const unsigned long dataLength);
 
 // Useful functions that utilize FFTs
 
-void xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength); // Upsamples to the next power of two elements
+xsComplex *xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength);
 
 #endif
