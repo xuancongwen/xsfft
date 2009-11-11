@@ -3,20 +3,23 @@
 
 #include "xsfft.h"
 
-const double xsPI = 3.14159265358979323846;
-
 // Private functions
 
-void _xsFormatInput(xsComplex *data, const long dataLength);
-void _xsTransformHelper(xsComplex *data, const long dataLength, const double signedPI);
-void _xsScaleIFFT(xsComplex *data, const long dataLength);
+void _xsFormatInput(xsComplex *data, const unsigned long dataLength);
+void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const double signedPI);
+void _xsScaleIFFT(xsComplex *data, const unsigned long dataLength);
+xsComplex *_xsReverseCopy(xsComplex *data, const unsigned long dataLength);
 
 
 // Public method implementations
 
-long xsNextPowerOfTwo(const long value)
+unsigned long xsNextPowerOfTwo(const unsigned long value)
 {
-    long nextPowerOfTwo = 1;
+    if (!(value & (value - 1))) {
+        return value;
+    }
+    
+    unsigned long nextPowerOfTwo = 1;
     while (nextPowerOfTwo < value) {
         nextPowerOfTwo <<= 1;
     }
@@ -24,35 +27,23 @@ long xsNextPowerOfTwo(const long value)
     return nextPowerOfTwo;
 }
 
-void xsCoerceDataRadix2(xsComplex *data, long *dataLength)
+void xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength)
 {
-    long newLength = xsNextPowerOfTwo(*dataLength);
+    unsigned long newLength = xsNextPowerOfTwo(*dataLength);
     if (newLength == *dataLength) {
         return;
     }
     
-    data = (xsComplex *)realloc(data, newLength);
-    xsComplex *dataIterator = data;
-    for (long index = *dataLength; index < newLength; ++index, ++dataIterator) {
+    data = (xsComplex *)realloc(data, sizeof(xsComplex) * newLength);
+    xsComplex *dataIterator = (data + *dataLength);
+    for (unsigned long index = *dataLength; index < newLength; ++index, ++dataIterator) {
         dataIterator->set(0.0, 0.0);
     }
     
     *dataLength = newLength;
 }
 
-bool xsFFT(xsComplex *data, const long dataLength)
-{
-	if (!data || dataLength < 1 || dataLength & (dataLength - 1)) {
-        return false;
-    }
-    
-	_xsFormatInput(data, dataLength);
-    _xsTransformHelper(data, dataLength, xsPI);
-    
-	return true;
-}
-
-bool xsIFFT(xsComplex *data, const long dataLength)
+bool xsFFT(xsComplex *data, const unsigned long dataLength)
 {
 	if (!data || dataLength < 1 || dataLength & (dataLength - 1)) {
         return false;
@@ -60,6 +51,18 @@ bool xsIFFT(xsComplex *data, const long dataLength)
     
 	_xsFormatInput(data, dataLength);
     _xsTransformHelper(data, dataLength, -xsPI);
+    
+	return true;
+}
+
+bool xsIFFT(xsComplex *data, const unsigned long dataLength)
+{
+	if (!data || dataLength < 1 || dataLength & (dataLength - 1)) {
+        return false;
+    }
+    
+	_xsFormatInput(data, dataLength);
+    _xsTransformHelper(data, dataLength, xsPI);
 	_xsScaleIFFT(data, dataLength);
     
 	return true;
@@ -68,16 +71,17 @@ bool xsIFFT(xsComplex *data, const long dataLength)
 
 // Private method implementations
 
-void _xsFormatInput(xsComplex *data, const long dataLength)
+void _xsFormatInput(xsComplex *data, const unsigned long dataLength)
 {
-	long target = 0;
-	for (unsigned int dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
+	unsigned long target = 0;
+	for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
 		if (target > dataIndex) {
 			xsComplex temp((data + target)->real(), (data + target)->imaginary());
-			*(data + target) = *(data + dataIndex);
-			*(data + dataIndex) = temp;
+            (data + target)->set((data + dataIndex)->real(), (data + dataIndex)->imaginary());
+			(data + dataIndex)->set(temp.real(), temp.imaginary());
 		}
-		long targetBitMask = dataLength;
+        
+		unsigned long targetBitMask = dataLength;
 
 		while (target & (targetBitMask >>= 1)) {
 			target &= targetBitMask;
@@ -86,45 +90,52 @@ void _xsFormatInput(xsComplex *data, const long dataLength)
 	}
 }
 
-void _xsTransformHelper(xsComplex *data, const long dataLength, const double signedPI)
+void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const double signedPI)
 {
-	//   Perform butterflies...
-	for (long step = 1; step < dataLength; step <<= 1) {
-		//   Jump to the next entry of the same transform factor
-		long Jump = step << 1;
-		//   Angle increment
-		double delta = signedPI / double(step);
-		//   Auxiliary sin(delta / 2)
-		double Sine = sin(delta * .5);
-		//   Multiplier for trigonometric recurrence
-		xsComplex Multiplier(-2.0 * Sine * Sine, sin(delta));
-		//   Start value for transform factor, fi = 0
-		xsComplex Factor(1.0, 0.0);
+    //   Perform butterflies...
+	for (unsigned long step = 1; step < dataLength; step <<= 1) {
+		double Sine = sin(signedPI / double(step) * 0.5);
+		//   Twiddle Constant
+		xsComplex twiddleMultiplier(-2.0 * Sine * Sine, sin(signedPI / double(step)));
+		//   Start value for transform factor
+		xsComplex twiddleFactor(1.0);
 		//   Iteration through groups of different transform factor
-		for (long Group = 0; Group < step; ++Group) {
+		for (unsigned long Group = 0; Group < step; ++Group) {
 			//   Iteration within group 
-			for (long Pair = Group; Pair < dataLength; Pair += Jump) {
+			for (unsigned long Pair = Group; Pair < dataLength; Pair += (step << 1)) {
 				//   Match position
-				long Match = Pair + step;
+				unsigned long Match = Pair + step;
 				//   Second term of two-point transform
-				xsComplex Product((Factor * data[Match]).real(), (Factor * data[Match]).imaginary());
+				xsComplex Product(twiddleFactor * data[Match]);
 				//   Transform for fi + pi
 				data[Match] = data[Pair] - Product;
 				//   Transform for fi
 				data[Pair] += Product;
 			}
-			//   Successive transform factor via trigonometric recurrence
-			Factor = Multiplier * Factor + Factor;
+            
+			twiddleFactor = twiddleMultiplier * twiddleFactor + twiddleFactor;
 		}
 	}
 }
 
+xsComplex *_xsReverseCopy(xsComplex *data, const unsigned long dataLength)
+{
+    xsComplex *reversedCopy = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
+    
+    for (unsigned long index = 0; index < dataLength; ++index) {
+        (reversedCopy + (dataLength - index) - 1)->set((data + index)->real(), (data+index)->imaginary());
+    }
+    
+    return reversedCopy;
+}
+
+
 //   Scaling of inverse FFT result
-void _xsScaleIFFT(xsComplex *data, const long dataLength)
+void _xsScaleIFFT(xsComplex *data, const unsigned long dataLength)
 {
 	const double scaleFactor = 1.0 / double(dataLength);
 	//   Scale all data entries
-	for (long dataPosition = 0; dataPosition < dataLength; ++dataPosition) {
+	for (unsigned long dataPosition = 0; dataPosition < dataLength; ++dataPosition) {
         *(data + dataPosition) *= scaleFactor;
     }
 }

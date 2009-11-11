@@ -9,27 +9,27 @@
 #ifndef XS_FFT
 #define XS_FFT
 
-#include "xscomplex.h"
+#define xsPI 3.14159265358979323846
 
-extern const double xsPI;
+#include "xscomplex.h"
 
 ///////////////////////////////////////////
 // For a given value, find the next highest
 // power of two
 ///////////////////////////////////////////
-long xsNextPowerOfTwo(const long value);
+unsigned long xsNextPowerOfTwo(const unsigned long value);
 
 ///////////////////////////////////////////
 // Coerces the incoming array into a radix
 // 2 array in place.
 ///////////////////////////////////////////
-void xsCoerceDataRadix2(xsComplex *data, long *dataLength);
+void xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength);
 
 ////////////////////////////////////////////////
 // FORWARD FAST FOURIER TRANSFORM
 //     Performs the FFT in place.
 ////////////////////////////////////////////////
-bool xsFFT(xsComplex *data, const long dataLength);
+bool xsFFT(xsComplex *data, const unsigned long dataLength);
 
 //////////////////////////////////////////////////////////
 // INVERSE FAST FOURIER TRANSFORM
@@ -37,7 +37,7 @@ bool xsFFT(xsComplex *data, const long dataLength);
 //
 //     The result is always scaled
 //////////////////////////////////////////////////////////
-bool xsIFFT(xsComplex *data, const long dataLength);
+bool xsIFFT(xsComplex *data, const unsigned long dataLength);
 
 ////////////////////////////////////////////////////
 // Uses FFT interpolation to
@@ -45,6 +45,6 @@ bool xsIFFT(xsComplex *data, const long dataLength);
 // Each call will scale the number of data points
 // up by a factor of 2.
 ////////////////////////////////////////////////////
-void xsUpSample(xsComplex *data, long *dataLength);
+void xsUpSample(xsComplex *data, unsigned long *dataLength);
 
 #endif

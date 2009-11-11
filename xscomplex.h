@@ -8,7 +8,6 @@
 #ifndef XS_COMPLEX
 #define XS_COMPLEX
 
-
 class xsComplex
 {
 public:
@@ -18,11 +17,11 @@ public:
     
 	//   Initialization
 	xsComplex();
-	xsComplex(const double real, const double imaginary);
-	xsComplex(const double theta);  // Euler initialization
+	xsComplex(double real, double imaginary);
+	xsComplex(double real);  // Euler initialization
     
 	//   Assignment
-	xsComplex &operator=(const xsComplex &toCopy);
+	xsComplex &operator=(const double real);
     void set(const double real, const double imaginary);
     void setReal(const double real);
     void setImaginary(const double imaginary);
@@ -42,17 +41,35 @@ public:
 	xsComplex operator*(const xsComplex &right) const;
 	xsComplex operator/(const xsComplex &right) const;
     
+    xsComplex operator+(const double right) const;
+    xsComplex operator-(const double right) const;
+    xsComplex operator*(const double right) const;
+    xsComplex operator/(const double right) const;
+    
 	xsComplex &operator+=(const xsComplex &right);
 	xsComplex &operator-=(const xsComplex &right);
 	xsComplex &operator*=(const xsComplex &right);
 	xsComplex &operator/=(const xsComplex &right);
     
+    xsComplex &operator+=(const double right);
+    xsComplex &operator-=(const double right);
     xsComplex &operator*=(const double right);
 	xsComplex &operator/=(const double right);
     
+    friend xsComplex operator+(const double left, const xsComplex &right);
+    friend xsComplex operator-(const double left, const xsComplex &right);
+    friend xsComplex operator*(const double left, const xsComplex &right);
+    friend xsComplex operator/(const double left, const xsComplex &right);
+        
 	//   Comparison
 	bool operator==(const xsComplex &right) const;
-	bool operator!= (const xsComplex &right) const;
+	bool operator!=(const xsComplex &right) const;
+    
+    bool operator==(const double right) const;
+    bool operator!=(const double right) const;
+    
+    friend bool operator==(const double left, const xsComplex &right);
+	friend bool operator!=(const double left, const xsComplex &right);
     
 protected:
 	double _real;
