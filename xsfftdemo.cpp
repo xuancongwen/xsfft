@@ -4,6 +4,7 @@
 */
 
 #include <iostream>
+#include <cstdlib>
 
 #include "xsfft.h"
 
