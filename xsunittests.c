@@ -2,12 +2,9 @@
  This contains testing for xsComplex and xsFFT.
  */
 
-#include <iostream>
+#include <stdio.h>
 #include <assert.h>
-
 #include "xsfft.h"
-
-using namespace std;
 
 // Private methods to be tested
 

@@ -3,11 +3,8 @@
     elements.  This function does not care how many elements are in the input file.
 */
 
-#include <iostream>
-
+#include <stdio.h>
 #include "xsfft.h"
-
-using namespace std;
 
 int main(int argc, char *argv[])
 {
@@ -19,11 +16,11 @@ int main(int argc, char *argv[])
     
     free(rawData);
     
-    cout << "--------------------------Interpolation----------------------------------" << endl;
+    puts("--------------------------Interpolation----------------------------------\n");
     
     data = xsInterpolateWithFactor2(data, &dataLength);
     for(unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        cout << (data + dataIndex)->real() << endl;
+        printf("%f\n" (data + dataIndex)->real());
     }
 
     xsFreeArray(data);
