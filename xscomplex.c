@@ -58,7 +58,7 @@ xsComplex xsComplexDifference(const xsComplex minuend, const xsComplex subtrahen
 
 xsComplex xsComplexQuotient(const xsComplex dividend, const xsComplex divisor)
 {
-    const double denominator = divisor.real * divisor.real + divisor.imaginary + divisor.imaginary;
+    const double denominator = divisor.real * divisor.real + divisor.imaginary * divisor.imaginary;
     xsComplex quotient;
     quotient.real = (dividend.real * divisor.real + dividend.imaginary * divisor.imaginary) / denominator;
     quotient.imaginary = (dividend.imaginary * divisor.real - dividend.real * divisor.imaginary) / denominator;

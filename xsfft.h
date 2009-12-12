@@ -15,12 +15,12 @@
 
 // Complex array creation/destruction
 
-xsComplex *xsAllocArray(double *data, unsigned long dataLength);
-xsComplex *xsAllocArray(float *data, unsigned long dataLength);
-xsComplex *xsAllocArray(long *data, unsigned long dataLength);
-xsComplex *xsAllocArray(int *data, unsigned long dataLength);
-xsComplex *xsAllocArray(short *data, unsigned long dataLength);
-xsComplex *xsAllocArray(char *data, unsigned long dataLength);
+xsComplex *xsAllocArrayDouble(double *data, unsigned long dataLength);
+xsComplex *xsAllocArrayFloat(float *data, unsigned long dataLength);
+xsComplex *xsAllocArrayLong(long *data, unsigned long dataLength);
+xsComplex *xsAllocArrayInt(int *data, unsigned long dataLength);
+xsComplex *xsAllocArrayShort(short *data, unsigned long dataLength);
+xsComplex *xsAllocArrayChar(char *data, unsigned long dataLength);
 
 void xsFreeArray(xsComplex *data);
 
@@ -34,8 +34,8 @@ xsComplex *xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength);
 
 // FFT and IFFT
 
-bool xsFFT(xsComplex *data, const unsigned long dataLength);
-bool xsIFFT(xsComplex *data, const unsigned long dataLength);
+int xsFFT(xsComplex *data, const unsigned long dataLength);
+int xsIFFT(xsComplex *data, const unsigned long dataLength);
 
 // Useful functions that utilize FFTs
 

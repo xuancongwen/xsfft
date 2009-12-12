@@ -1,8 +1,8 @@
-all: xscomplex.cpp xsfft.cpp xsfftdemo.cpp
-	g++ -O xscomplex.cpp xsfft.cpp xsfftdemo.cpp -o xsfftdemo
+all: xscomplex.c xsfft.c xsfftdemo.c
+	gcc -O xscomplex.c xsfft.c xsfftdemo.c -o xsfftdemo
 
-tests: xscomplex.cpp xsfft.cpp xsunittests.cpp
-	g++ -O xscomplex.cpp xsfft.cpp xsunittests.cpp -o xsunittests
+tests: xscomplex.c xsfft.c xsunittests.c
+	gcc -O xscomplex.c xsfft.c xsunittests.c -o xsunittests
 
 clean:
 	rm xsfftdemo
