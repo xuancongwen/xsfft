@@ -3,29 +3,28 @@
     elements.  This function does not care how many elements are in the input file.
 */
 
-<<<<<<< HEAD:xsfftdemo.cpp
 #include <iostream>
 #include <cstdlib>
 
-=======
-#include <stdio.h>
-#include <stdlib.h>
->>>>>>> c-only:xsfftdemo.c
 #include "xsfft.h"
+
+using namespace std;
 
 int main(int argc, char *argv[])
 {
     unsigned long dataLength = 100;
     int *rawData = (int *)calloc(dataLength, sizeof(int));
     for (unsigned long signalIndex = 0; signalIndex < dataLength; ++signalIndex, *(rawData + signalIndex) = signalIndex);
-    xsComplex *data = xsAllocArrayInt(rawData, dataLength);
+    
+    xsComplex *data = xsAllocArray(rawData, dataLength);
+    
     free(rawData);
     
-    puts("--------------------------Interpolation----------------------------------\n");
+    cout << "--------------------------Interpolation----------------------------------" << endl;
     
     data = xsInterpolateWithFactor2(data, &dataLength);
     for(unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        printf("%f\n", (data + dataIndex)->real);
+        cout << (data + dataIndex)->real() << endl;
     }
 
     xsFreeArray(data);
