@@ -14,6 +14,14 @@ typedef struct _xsComplex {
     double imaginary;
 } xsComplex;
 
+// Initialization
+xsComplex xsComplexCreate();
+xsComplex xsComplexFromComponents(const double real, const double imaginary);
+xsComplex xsComplexFromReal(const double real);
+xsComplex xsComplexFromImaginary(const double imaginary);
+xsComplex xsComplexFromPolar(const double r, const double theta);
+xsComplex xsComplexFromComplex(const xsComplex complex);
+
 // Comparison
 int xsComplexEqual(const xsComplex left, const xsComplex right);
 
@@ -21,6 +29,7 @@ int xsComplexEqual(const xsComplex left, const xsComplex right);
 xsComplex xsComplexConjugate(const xsComplex complex);
 double xsComplexNorm(const xsComplex complex);
 double xsComplexMagnitude(const xsComplex complex);
+xsComplex xsComplexScale(xsComplex complex, const double scaleFactor);
 
 // Commutative operations
 xsComplex xsComplexSum(const xsComplex left, const xsComplex right);

@@ -222,15 +222,8 @@ void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const d
     //   Perform butterflies...
 	for (unsigned long step = 1; step < dataLength; step <<= 1) {
 		double sine = sin(signedPI / (double)step * 0.5);
-        
-		xsComplex twiddleMultiplier;
-        twiddleMultiplier.real = -2.0 * sine * sine;
-        twiddleMultiplier.imaginary = sin(signedPI / (double)step);
-        
-		xsComplex twiddleFactor;
-        twiddleFactor.real = 1.0;
-        twiddleFactor.imaginary = 0.0;
-        
+		xsComplex twiddleMultiplier = xsComplexFromComponents(-2.0 * sine * sine, sin(signedPI / (double)step));
+		xsComplex twiddleFactor = xsComplexFromReal(1.0);
 		for (unsigned long group = 0; group < step; ++group) {
 			for (unsigned long pair = group; pair < dataLength; pair += (step << 1)) {
 				unsigned long match = pair + step;
@@ -249,8 +242,7 @@ xsComplex *_xsReverseCopy(xsComplex *data, const unsigned long dataLength)
     xsComplex *reversedCopy = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
     
     for (unsigned long index = 0; index < dataLength; ++index) {
-        (reversedCopy + (dataLength - index) - 1)->real = (data + index)->real;
-        (reversedCopy + (dataLength - index) - 1)->imaginary = (data+index)->imaginary;
+        *(reversedCopy + (dataLength - index) - 1) = *(data + index);
     }
     
     return reversedCopy;
@@ -263,7 +255,6 @@ void _xsScaleIFFT(xsComplex *data, const unsigned long dataLength)
 	const double scaleFactor = 1.0 / (double)dataLength;
 	//   Scale all data entries
 	for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        (data + dataIndex)->real *= scaleFactor;
-        (data + dataIndex)->imaginary *= scaleFactor;
+        *(data + dataIndex) = xsComplexScale(*(data + dataIndex), scaleFactor);
     }
 }

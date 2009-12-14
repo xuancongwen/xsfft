@@ -41,7 +41,7 @@ void performTest(int test, const char *testBehavior)
 {
     printf("Testing %s...", testBehavior);
     assert(test);
-    puts("PASSED!\n");
+    puts("PASSED!");
 }
 
 
@@ -49,12 +49,29 @@ void performTest(int test, const char *testBehavior)
 
 void testComplexNumbers()
 {
-    puts("Testing complex numbers...\n\n");
+    puts("[Complex Number Test]\n");
+    
+    // Test initialization
+    xsComplex c1 = xsComplexCreate();
+    xsComplex c2;
+    xsComplex c3;
+    performTest(c1.real == 0.0 && c1.imaginary == 0.0, "xsComplexCreate");
+    c1 = xsComplexFromComponents(1.0, 2.0);
+    performTest(c1.real == 1.0 && c1.imaginary == 2.0, "xsComplexFromComponents");
+    c1 = xsComplexFromReal(5.0);
+    performTest(c1.real == 5.0 && c1.imaginary == 0.0, "xsComplexFromReal");
+    c1 = xsComplexFromImaginary(5.0);
+    performTest(c1.real == 0.0 && c1.imaginary == 5.0, "xsComplexFromImaginary");
+    c2 = xsComplexFromPolar(5.0, 0.523598775598299);
+    performTest(c2.real > 4.330126 && c2.real < 4.330128 && c2.imaginary > 2.499999 && c2.imaginary < 2.500001, "xsComplexFromPolar");
+    c2 = xsComplexCreate();
+    c1 = xsComplexFromComplex(c2);
+    performTest(c1.real == 0.0 && c1.imaginary == 0.0, "xsComplexFromComplex");
     
     // Test comparison
-    xsComplex c1 = {1.0, 2.0};
-    xsComplex c2 = {1.0, -2.0};
-    xsComplex c3 = {0.0, 0.0};
+    c1 = xsComplexFromComponents(1.0, 2.0);
+    c2 = xsComplexFromComponents(1.0, -2.0);
+    c3 = xsComplexCreate();
     performTest(xsComplexEqual(c1, c1), "Equality");
     performTest(!xsComplexEqual(c1, c2), "In-equality");
     
@@ -104,12 +121,10 @@ void _testInterpolation()
     unsigned long dataLength = 100;
     int *rawData = (int *)calloc(dataLength, sizeof(int));
     for (unsigned long signalIndex = 0; signalIndex < dataLength; ++signalIndex, *(rawData + signalIndex) = signalIndex);
-    
     xsComplex *data = xsAllocArrayInt(rawData, dataLength);
-    
     free(rawData);
     
-    puts("--------------------------Interpolation----------------------------------\n");
+    puts("[Interpolation Tests]\n");
     
     data = xsInterpolateWithFactor2(data, &dataLength);
     for(unsigned long dataIndex = 0; dataIndex < 100; dataIndex += 2) {
@@ -122,6 +137,7 @@ void _testInterpolation()
 void testFFTs()
 {
     // Setup
+    puts("[FFT Tests]\n");
     unsigned long dataLength = 100;
     int *rawData = (int *)calloc(dataLength, sizeof(int));
     for (unsigned long signalIndex = 0; signalIndex < dataLength; ++signalIndex, *(rawData + signalIndex) = signalIndex);    
@@ -134,7 +150,7 @@ void testFFTs()
     // Test xsAllocArray()
     xsComplex *data = xsAllocArrayInt(rawData, dataLength);
     for (unsigned long index = 0; index < dataLength; ++index) {
-        xsComplex testAgainst = {index, 0.0};
+        xsComplex testAgainst = xsComplexFromReal(index);
         performTest(xsComplexEqual(*(data + index), testAgainst), "xsAllocArray() tests");
     }
     
@@ -142,9 +158,9 @@ void testFFTs()
     data = xsCoerceDataRadix2(data, &dataLength);
     performTest(dataLength == 128, "xsCoerceDataRadix2 new data size");
     for (unsigned long index = 0; index < dataLength; ++index) {
-        xsComplex comparator = {0.0, 0.0};
+        xsComplex comparator = xsComplexCreate();
         if (index < 100) {
-            comparator.real = index;
+            comparator = xsComplexFromReal(index);
         }
         performTest(xsComplexEqual(*(data + index), comparator), "xsCoerceDataRadix2 new data padded section");
     }
@@ -154,5 +170,5 @@ void testFFTs()
     // Interpolation
     _testInterpolation();
     
-    puts("FFT functions tested and correct.\n");
+    puts("FFT functions tested and correct.");
 }
