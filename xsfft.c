@@ -1,6 +1,5 @@
 #include <math.h>
 #include <stdlib.h>
-
 #include "xsfft.h"
 
 // Private functions
@@ -13,67 +12,73 @@ xsComplex *_xsReverseCopy(xsComplex *data, const unsigned long dataLength);
 
 // Complex array creation/destruction
 
-xsComplex *xsAllocArray(double *data, unsigned long dataLength)
+xsComplex *xsAllocArrayDouble(double *data, unsigned long dataLength)
 {
     xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
     
     for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        (newData + dataIndex)->set(*(data + dataIndex), 0.0);
+        (newData + dataIndex)->real = *(data + dataIndex);
+        (newData + dataIndex)->imaginary = 0.0;
     }
     
     return newData;
 }
 
-xsComplex *xsAllocArray(float *data, unsigned long dataLength)
+xsComplex *xsAllocArrayFloat(float *data, unsigned long dataLength)
 {
     xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
     
     for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        (newData + dataIndex)->set(double(*(data + dataIndex)), 0.0);
+        (newData + dataIndex)->real = (double)(*(data + dataIndex));
+        (newData + dataIndex)->imaginary = 0.0;
     }
     
     return newData;
 }
 
-xsComplex *xsAllocArray(long *data, unsigned long dataLength)
+xsComplex *xsAllocArrayLong(long *data, unsigned long dataLength)
 {
     xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
     
     for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        (newData + dataIndex)->set(double(*(data + dataIndex)), 0.0);
+        (newData + dataIndex)->real = (double)(*(data + dataIndex));
+        (newData + dataIndex)->imaginary = 0.0;
     }
     
     return newData;
 }
 
-xsComplex *xsAllocArray(int *data, unsigned long dataLength)
+xsComplex *xsAllocArrayInt(int *data, unsigned long dataLength)
 {
     xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
     
     for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        (newData + dataIndex)->set(double(*(data + dataIndex)), 0.0);
+        (newData + dataIndex)->real = (double)(*(data + dataIndex));
+        (newData + dataIndex)->imaginary = 0.0;
     }
     
     return newData;
 }
 
-xsComplex *xsAllocArray(short *data, unsigned long dataLength)
+xsComplex *xsAllocArrayShort(short *data, unsigned long dataLength)
 {
     xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
     
     for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        (newData + dataIndex)->set(double(*(data + dataIndex)), 0.0);
+        (newData + dataIndex)->real = (double)(*(data + dataIndex));
+        (newData + dataIndex)->imaginary = 0.0;
     }
     
     return newData;
 }
 
-xsComplex *xsAllocArray(char *data, unsigned long dataLength)
+xsComplex *xsAllocArrayChar(char *data, unsigned long dataLength)
 {
     xsComplex *newData = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
     
     for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        (newData + dataIndex)->set(double(*(data + dataIndex)), 0.0);
+        (newData + dataIndex)->real = (double)(*(data + dataIndex));
+        (newData + dataIndex)->imaginary = 0.0;
     }
     
     return newData;
@@ -110,7 +115,8 @@ xsComplex *xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength)
     
     data = (xsComplex *)realloc(data, sizeof(xsComplex) * newLength);
     for (unsigned long index = *dataLength; index < newLength; ++index) {
-        (data + index)->set(0.0, 0.0);
+        (data + index)->real = 0.0;
+        (data + index)->imaginary = 0.0;
     }
     
     *dataLength = newLength;
@@ -118,29 +124,29 @@ xsComplex *xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength)
     return data;
 }
 
-bool xsFFT(xsComplex *data, const unsigned long dataLength)
+int xsFFT(xsComplex *data, const unsigned long dataLength)
 {
 	if (!data || dataLength < 1 || dataLength & (dataLength - 1)) {
-        return false;
+        return 0;
     }
     
 	_xsFormatInput(data, dataLength);
     _xsTransformHelper(data, dataLength, -xsPI);
     
-	return true;
+	return 1;
 }
 
-bool xsIFFT(xsComplex *data, const unsigned long dataLength)
+int xsIFFT(xsComplex *data, const unsigned long dataLength)
 {
 	if (!data || dataLength < 1 || dataLength & (dataLength - 1)) {
-        return false;
+        return 0;
     }
     
 	_xsFormatInput(data, dataLength);
     _xsTransformHelper(data, dataLength, xsPI);
 	_xsScaleIFFT(data, dataLength);
     
-	return true;
+	return 1;
 }
 
 
@@ -162,20 +168,25 @@ xsComplex *xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength)
     unsigned long rightHalfFirstIndex = 3 * oldLength / 2;
     unsigned long zeroPadFirstIndex = oldLength / 2;
     
-    xsComplex center(*(data + zeroPadFirstIndex));
-    *(data + zeroPadFirstIndex) = center / 2.0;
-    *(data + rightHalfFirstIndex) = center / 2.0;
+    xsComplex center = *(data + zeroPadFirstIndex);
+    (data + zeroPadFirstIndex)->real = center.real / 2.0;
+    (data + zeroPadFirstIndex)->imaginary = center.imaginary / 2.0;
+    
+    (data + rightHalfFirstIndex)->real = center.real / 2.0;
+    (data + rightHalfFirstIndex)->imaginary = center.imaginary / 2.0;
     
     for (unsigned long zeroPadIndex = 1; zeroPadIndex < oldLength / 2; ++zeroPadIndex) {
         *(data + rightHalfFirstIndex + zeroPadIndex) = *(data + zeroPadFirstIndex + zeroPadIndex);
-        (data + zeroPadFirstIndex + zeroPadIndex)->set(0.0, 0.0);
+        (data + zeroPadFirstIndex + zeroPadIndex)->real = 0.0;
+        (data + zeroPadFirstIndex + zeroPadIndex)->imaginary = 0.0;
     }
     
     *dataLength = newLength;
     
     // Power has been halved at this point, we need to scale
     for (unsigned long index = 0; index < newLength; ++index) {
-        *(data + index) *= 2.0;
+        (data + index)->real *= 2.0;
+        (data + index)->imaginary *= 2.0;
     }
     
     // IFFT
@@ -192,7 +203,7 @@ void _xsFormatInput(xsComplex *data, const unsigned long dataLength)
 	unsigned long target = 0;
 	for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
 		if (target > dataIndex) {
-			xsComplex temp((data + target)->real(), (data + target)->imaginary());
+			xsComplex temp = *(data + target);
             *(data + target) = *(data + dataIndex);
 			*(data + dataIndex) = temp;
 		}
@@ -210,18 +221,18 @@ void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const d
 {
     //   Perform butterflies...
 	for (unsigned long step = 1; step < dataLength; step <<= 1) {
-		double sine = sin(signedPI / double(step) * 0.5);
-		xsComplex twiddleMultiplier(-2.0 * sine * sine, sin(signedPI / double(step)));
-		xsComplex twiddleFactor(1.0);
+		double sine = sin(signedPI / (double)step * 0.5);
+		xsComplex twiddleMultiplier = xsComplexFromComponents(-2.0 * sine * sine, sin(signedPI / (double)step));
+		xsComplex twiddleFactor = xsComplexFromReal(1.0);
 		for (unsigned long group = 0; group < step; ++group) {
 			for (unsigned long pair = group; pair < dataLength; pair += (step << 1)) {
 				unsigned long match = pair + step;
-				xsComplex product(twiddleFactor * *(data + match));
-				*(data + match) = *(data + pair) - product;
-				*(data + pair) += product;
+				xsComplex product = xsComplexProduct(twiddleFactor, *(data + match));
+				*(data + match) = xsComplexDifference(*(data + pair), product);
+                *(data + pair) = xsComplexSum(*(data + pair), product);
 			}
             
-			twiddleFactor = twiddleMultiplier * twiddleFactor + twiddleFactor;
+			twiddleFactor = xsComplexSum(xsComplexProduct(twiddleMultiplier, twiddleFactor), twiddleFactor);
 		}
 	}
 }
@@ -231,7 +242,7 @@ xsComplex *_xsReverseCopy(xsComplex *data, const unsigned long dataLength)
     xsComplex *reversedCopy = (xsComplex *)calloc(dataLength, sizeof(xsComplex));
     
     for (unsigned long index = 0; index < dataLength; ++index) {
-        (reversedCopy + (dataLength - index) - 1)->set((data + index)->real(), (data+index)->imaginary());
+        *(reversedCopy + (dataLength - index) - 1) = *(data + index);
     }
     
     return reversedCopy;
@@ -241,9 +252,9 @@ xsComplex *_xsReverseCopy(xsComplex *data, const unsigned long dataLength)
 //   Scaling of inverse FFT result
 void _xsScaleIFFT(xsComplex *data, const unsigned long dataLength)
 {
-	const double scaleFactor = 1.0 / double(dataLength);
+	const double scaleFactor = 1.0 / (double)dataLength;
 	//   Scale all data entries
 	for (unsigned long dataIndex = 0; dataIndex < dataLength; ++dataIndex) {
-        *(data + dataIndex) *= scaleFactor;
+        *(data + dataIndex) = xsComplexScale(*(data + dataIndex), scaleFactor);
     }
 }

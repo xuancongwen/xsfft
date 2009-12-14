@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F2A8A9D10A4C3D500E03417 /* xsfftdemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9710A4C3D500E03417 /* xsfftdemo.cpp */; };
-		1F2A8AA010A4C3D500E03417 /* xscomplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9A10A4C3D500E03417 /* xscomplex.cpp */; };
-		1F2A8AA110A4C3D500E03417 /* xsfft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */; };
-		1FED324810AB737100A2EC33 /* xsunittests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FED323D10AB724800A2EC33 /* xsunittests.cpp */; };
-		1FED324910AB737800A2EC33 /* xscomplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9A10A4C3D500E03417 /* xscomplex.cpp */; };
-		1FED324A10AB737800A2EC33 /* xsfft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */; };
+		1F2A8A9D10A4C3D500E03417 /* xsfftdemo.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9710A4C3D500E03417 /* xsfftdemo.c */; };
+		1F2A8AA010A4C3D500E03417 /* xscomplex.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9A10A4C3D500E03417 /* xscomplex.c */; };
+		1F2A8AA110A4C3D500E03417 /* xsfft.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9B10A4C3D500E03417 /* xsfft.c */; };
+		1FED324810AB737100A2EC33 /* xsunittests.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FED323D10AB724800A2EC33 /* xsunittests.c */; };
+		1FED324910AB737800A2EC33 /* xscomplex.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9A10A4C3D500E03417 /* xscomplex.c */; };
+		1FED324A10AB737800A2EC33 /* xsfft.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8A9B10A4C3D500E03417 /* xsfft.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,11 +30,11 @@
 /* Begin PBXFileReference section */
 		1F2A8A9410A4C3D500E03417 /* xscomplex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xscomplex.h; path = ../xscomplex.h; sourceTree = SOURCE_ROOT; };
 		1F2A8A9510A4C3D500E03417 /* xsfft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xsfft.h; path = /Users/xuwen/Workspace/SamWenInc/xsfft/xsfft.h; sourceTree = "<absolute>"; };
-		1F2A8A9710A4C3D500E03417 /* xsfftdemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xsfftdemo.cpp; path = /Users/xuwen/Workspace/SamWenInc/xsfft/xsfftdemo.cpp; sourceTree = "<absolute>"; };
-		1F2A8A9A10A4C3D500E03417 /* xscomplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xscomplex.cpp; path = ../xscomplex.cpp; sourceTree = SOURCE_ROOT; };
-		1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xsfft.cpp; path = /Users/xuwen/Workspace/SamWenInc/xsfft/xsfft.cpp; sourceTree = "<absolute>"; };
-		1FED323D10AB724800A2EC33 /* xsunittests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xsunittests.cpp; path = ../xsunittests.cpp; sourceTree = SOURCE_ROOT; };
-		1FED324410AB736700A2EC33 /* unit tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "unit tests"; path = "build/Debug/unit tests"; sourceTree = "<group>"; };
+		1F2A8A9710A4C3D500E03417 /* xsfftdemo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xsfftdemo.c; path = /Users/xuwen/Workspace/SamWenInc/xsfft/xsfftdemo.c; sourceTree = "<absolute>"; };
+		1F2A8A9A10A4C3D500E03417 /* xscomplex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xscomplex.c; path = ../xscomplex.c; sourceTree = SOURCE_ROOT; };
+		1F2A8A9B10A4C3D500E03417 /* xsfft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xsfft.c; path = /Users/xuwen/Workspace/SamWenInc/xsfft/xsfft.c; sourceTree = "<absolute>"; };
+		1FED323D10AB724800A2EC33 /* xsunittests.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xsunittests.c; path = ../xsunittests.c; sourceTree = SOURCE_ROOT; };
+		1FED324410AB736700A2EC33 /* unit tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "unit tests"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DD76F6C0486A84900D96B5E /* xsfft */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xsfft; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -71,9 +71,9 @@
 			isa = PBXGroup;
 			children = (
 				1F2A8A9410A4C3D500E03417 /* xscomplex.h */,
-				1F2A8A9A10A4C3D500E03417 /* xscomplex.cpp */,
+				1F2A8A9A10A4C3D500E03417 /* xscomplex.c */,
 				1F2A8A9510A4C3D500E03417 /* xsfft.h */,
-				1F2A8A9B10A4C3D500E03417 /* xsfft.cpp */,
+				1F2A8A9B10A4C3D500E03417 /* xsfft.c */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -90,7 +90,7 @@
 		1FED323910AB714B00A2EC33 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
-				1FED323D10AB724800A2EC33 /* xsunittests.cpp */,
+				1FED323D10AB724800A2EC33 /* xsunittests.c */,
 			);
 			name = "Unit Tests";
 			sourceTree = "<group>";
@@ -98,7 +98,7 @@
 		1FED324B10AB738600A2EC33 /* Usage Demo */ = {
 			isa = PBXGroup;
 			children = (
-				1F2A8A9710A4C3D500E03417 /* xsfftdemo.cpp */,
+				1F2A8A9710A4C3D500E03417 /* xsfftdemo.c */,
 			);
 			name = "Usage Demo";
 			sourceTree = "<group>";
@@ -163,9 +163,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FED324810AB737100A2EC33 /* xsunittests.cpp in Sources */,
-				1FED324910AB737800A2EC33 /* xscomplex.cpp in Sources */,
-				1FED324A10AB737800A2EC33 /* xsfft.cpp in Sources */,
+				1FED324810AB737100A2EC33 /* xsunittests.c in Sources */,
+				1FED324910AB737800A2EC33 /* xscomplex.c in Sources */,
+				1FED324A10AB737800A2EC33 /* xsfft.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,9 +173,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F2A8A9D10A4C3D500E03417 /* xsfftdemo.cpp in Sources */,
-				1F2A8AA010A4C3D500E03417 /* xscomplex.cpp in Sources */,
-				1F2A8AA110A4C3D500E03417 /* xsfft.cpp in Sources */,
+				1F2A8A9D10A4C3D500E03417 /* xsfftdemo.c in Sources */,
+				1F2A8AA010A4C3D500E03417 /* xscomplex.c in Sources */,
+				1F2A8AA110A4C3D500E03417 /* xsfft.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +197,7 @@
 				);
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = xsfft;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -208,6 +209,7 @@
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = xsfft;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
