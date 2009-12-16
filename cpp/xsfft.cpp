@@ -82,6 +82,7 @@ xsComplex *xsAllocArray(char *data, unsigned long dataLength)
 void xsFreeArray(xsComplex *data)
 {
     free(data);
+    data = NULL;
 }
 
 
