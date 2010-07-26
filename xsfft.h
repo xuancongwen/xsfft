@@ -34,8 +34,8 @@ xsComplex *xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength);
 
 // FFT and IFFT
 
-int xsFFT(xsComplex *data, const unsigned long dataLength);
-int xsIFFT(xsComplex *data, const unsigned long dataLength);
+int xsFFT(xsComplex *data, const unsigned long dataLength, const unsigned long maxFrequency);
+int xsIFFT(xsComplex *data, const unsigned long dataLength, const unsigned long maxFrequency);
 
 // Useful functions that utilize FFTs
 

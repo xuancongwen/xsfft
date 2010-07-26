@@ -5,7 +5,7 @@
 // Private functions
 
 void _xsFormatInput(xsComplex *data, const unsigned long dataLength);
-void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const double signedPI);
+void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const double signedPI, const unsigned long maxFrequency);
 void _xsScaleIFFT(xsComplex *data, const unsigned long dataLength);
 xsComplex *_xsReverseCopy(xsComplex *data, const unsigned long dataLength);
 
@@ -125,26 +125,26 @@ xsComplex *xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength)
     return data;
 }
 
-int xsFFT(xsComplex *data, const unsigned long dataLength)
+int xsFFT(xsComplex *data, const unsigned long dataLength, const unsigned long maxFrequency)
 {
 	if (!data || dataLength < 1 || dataLength & (dataLength - 1)) {
         return 0;
     }
     
 	_xsFormatInput(data, dataLength);
-    _xsTransformHelper(data, dataLength, -xsPI);
+    _xsTransformHelper(data, dataLength, -xsPI, maxFrequency);
     
 	return 1;
 }
 
-int xsIFFT(xsComplex *data, const unsigned long dataLength)
+int xsIFFT(xsComplex *data, const unsigned long dataLength, const unsigned long maxFrequency)
 {
 	if (!data || dataLength < 1 || dataLength & (dataLength - 1)) {
         return 0;
     }
     
 	_xsFormatInput(data, dataLength);
-    _xsTransformHelper(data, dataLength, xsPI);
+    _xsTransformHelper(data, dataLength, xsPI, maxFrequency);
 	_xsScaleIFFT(data, dataLength);
     
 	return 1;
@@ -161,7 +161,7 @@ xsComplex *xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength)
     unsigned long newLength = oldLength << 1;
     
     // FFT
-    xsFFT(data, oldLength);
+    xsFFT(data, oldLength, oldLength);
     
     // Zero pad
     data = (xsComplex *)realloc(data, sizeof(xsComplex) * newLength);
@@ -191,7 +191,7 @@ xsComplex *xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength)
     }
     
     // IFFT
-    xsIFFT(data, newLength);
+    xsIFFT(data, newLength, 301584);
     
     return data;
 }
@@ -218,10 +218,10 @@ void _xsFormatInput(xsComplex *data, const unsigned long dataLength)
 	}
 }
 
-void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const double signedPI)
+void _xsTransformHelper(xsComplex *data, const unsigned long dataLength, const double signedPI, const unsigned long maxFrequency)
 {
     //   Perform butterflies...
-	for (unsigned long step = 1; step < dataLength; step <<= 1) {
+	for (unsigned long step = 1; step < maxFrequency; step <<= 1) {
 		double sine = sin(signedPI / (double)step * 0.5);
 		xsComplex twiddleMultiplier = xsComplexFromComponents(-2.0 * sine * sine, sin(signedPI / (double)step));
 		xsComplex twiddleFactor = xsComplexFromReal(1.0);
