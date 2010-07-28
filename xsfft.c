@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 #include "xsfft.h"
 
 // Private functions
@@ -114,15 +115,18 @@ xsComplex *xsCoerceDataRadix2(xsComplex *data, unsigned long *dataLength)
         return data;
     }
     
-    data = (xsComplex *)realloc(data, sizeof(xsComplex) * newLength);
+    xsComplex *newData = (xsComplex *)calloc(newLength, sizeof(xsComplex));
+    memcpy(newData, data, sizeof(xsComplex) * (*dataLength));
+    free(data);
+
     for (unsigned long index = *dataLength; index < newLength; ++index) {
-        (data + index)->real = 0.0;
-        (data + index)->imaginary = 0.0;
+        (newData + index)->real = 0.0;
+        (newData + index)->imaginary = 0.0;
     }
     
     *dataLength = newLength;
     
-    return data;
+    return newData;
 }
 
 int xsFFT(xsComplex *data, const unsigned long dataLength, const unsigned long maxFrequency)
@@ -156,7 +160,7 @@ int xsIFFT(xsComplex *data, const unsigned long dataLength, const unsigned long 
 xsComplex *xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength)
 {
     // Setup
-    xsCoerceDataRadix2(data, dataLength);
+    data = xsCoerceDataRadix2(data, dataLength);
     unsigned long oldLength = *dataLength;
     unsigned long newLength = oldLength << 1;
     
@@ -164,36 +168,39 @@ xsComplex *xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength)
     xsFFT(data, oldLength, oldLength);
     
     // Zero pad
-    data = (xsComplex *)realloc(data, sizeof(xsComplex) * newLength);
+    xsComplex *newData = (xsComplex *)calloc(newLength, sizeof(xsComplex));
+    memcpy(newData, data, sizeof(xsComplex) * oldLength);
+    free(data);
+    data = NULL;
     
     unsigned long rightHalfFirstIndex = 3 * oldLength / 2;
     unsigned long zeroPadFirstIndex = oldLength / 2;
     
-    xsComplex center = *(data + zeroPadFirstIndex);
-    (data + zeroPadFirstIndex)->real = center.real / 2.0;
-    (data + zeroPadFirstIndex)->imaginary = center.imaginary / 2.0;
+    xsComplex center = *(newData + zeroPadFirstIndex);
+    (newData + zeroPadFirstIndex)->real = center.real / 2.0;
+    (newData + zeroPadFirstIndex)->imaginary = center.imaginary / 2.0;
     
-    (data + rightHalfFirstIndex)->real = center.real / 2.0;
-    (data + rightHalfFirstIndex)->imaginary = center.imaginary / 2.0;
+    (newData + rightHalfFirstIndex)->real = center.real / 2.0;
+    (newData + rightHalfFirstIndex)->imaginary = center.imaginary / 2.0;
     
     for (unsigned long zeroPadIndex = 1; zeroPadIndex < oldLength / 2; ++zeroPadIndex) {
-        *(data + rightHalfFirstIndex + zeroPadIndex) = *(data + zeroPadFirstIndex + zeroPadIndex);
-        (data + zeroPadFirstIndex + zeroPadIndex)->real = 0.0;
-        (data + zeroPadFirstIndex + zeroPadIndex)->imaginary = 0.0;
+        *(newData + rightHalfFirstIndex + zeroPadIndex) = *(newData + zeroPadFirstIndex + zeroPadIndex);
+        (newData + zeroPadFirstIndex + zeroPadIndex)->real = 0.0;
+        (newData + zeroPadFirstIndex + zeroPadIndex)->imaginary = 0.0;
     }
     
     *dataLength = newLength;
     
     // Power has been halved at this point, we need to scale
     for (unsigned long index = 0; index < newLength; ++index) {
-        (data + index)->real *= 2.0;
-        (data + index)->imaginary *= 2.0;
+        (newData + index)->real *= 2.0;
+        (newData + index)->imaginary *= 2.0;
     }
     
     // IFFT
-    xsIFFT(data, newLength, 301584);
-    
-    return data;
+    xsIFFT(newData, newLength, 301584);
+
+    return newData;
 }
 
 

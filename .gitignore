@@ -10,4 +10,6 @@ xsift
 *.mode2v3
 *.tm_build_errors
 .gitattributes
+xsfftdemo
+xsunittests
 

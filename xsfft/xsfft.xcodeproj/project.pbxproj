@@ -29,10 +29,10 @@
 
 /* Begin PBXFileReference section */
 		1F2A8A9410A4C3D500E03417 /* xscomplex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xscomplex.h; path = ../xscomplex.h; sourceTree = SOURCE_ROOT; };
-		1F2A8A9510A4C3D500E03417 /* xsfft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xsfft.h; path = /Users/xuwen/Workspace/SamWenInc/xsfft/xsfft.h; sourceTree = "<absolute>"; };
-		1F2A8A9710A4C3D500E03417 /* xsfftdemo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xsfftdemo.c; path = /Users/xuwen/Workspace/SamWenInc/xsfft/xsfftdemo.c; sourceTree = "<absolute>"; };
+		1F2A8A9510A4C3D500E03417 /* xsfft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xsfft.h; path = /Users/xuwen/Workspace/xsfft/xsfft.h; sourceTree = "<absolute>"; };
+		1F2A8A9710A4C3D500E03417 /* xsfftdemo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xsfftdemo.c; path = /Users/xuwen/Workspace/xsfft/xsfftdemo.c; sourceTree = "<absolute>"; };
 		1F2A8A9A10A4C3D500E03417 /* xscomplex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xscomplex.c; path = ../xscomplex.c; sourceTree = SOURCE_ROOT; };
-		1F2A8A9B10A4C3D500E03417 /* xsfft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xsfft.c; path = /Users/xuwen/Workspace/SamWenInc/xsfft/xsfft.c; sourceTree = "<absolute>"; };
+		1F2A8A9B10A4C3D500E03417 /* xsfft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xsfft.c; path = /Users/xuwen/Workspace/xsfft/xsfft.c; sourceTree = "<absolute>"; };
 		1FED323D10AB724800A2EC33 /* xsunittests.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xsunittests.c; path = ../xsunittests.c; sourceTree = SOURCE_ROOT; };
 		1FED324410AB736700A2EC33 /* unit tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "unit tests"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DD76F6C0486A84900D96B5E /* xsfft */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xsfft; sourceTree = BUILT_PRODUCTS_DIR; };
