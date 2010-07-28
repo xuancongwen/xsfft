@@ -198,7 +198,7 @@ xsComplex *xsInterpolateWithFactor2(xsComplex *data, unsigned long *dataLength)
     }
     
     // IFFT
-    xsIFFT(newData, newLength, 301584);
+    xsIFFT(newData, newLength, newLength);
 
     return newData;
 }
